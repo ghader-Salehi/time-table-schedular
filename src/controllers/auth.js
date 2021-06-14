@@ -29,7 +29,7 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!code || !password)
     return next(new AppError('Provide code and password'));
   const user = await User.findOne({ code }).select('+password');
-  if (!user || !user.correctPassword(password, user.password))
+  if (!user || !(await user.correctPassword(password, user.password)))
     return next(new AppError('Wrong code or password'));
   createAndSendToken(user, 201, res);
 });
@@ -43,7 +43,7 @@ exports.protect = catchAsync(async (req, res, next) => {
     token,
     process.env.JWT_SECRET
   );
-  const user = await User.findById(decoded.id);
+  const user = await User.findById(decoded.id).select('+password');
   if (!user) return next(new AppError('You are not Authonticated', 403));
   req.user = user;
   next();
