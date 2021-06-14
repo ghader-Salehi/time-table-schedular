@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
   firstname: {
@@ -22,6 +23,12 @@ const userSchema = new mongoose.Schema({
     enum: ['master', 'student'],
     required: [true, 'Please provide users rule'],
   },
+  password: {
+    type: String,
+    trim: true,
+    required: [true, 'Provide password for user'],
+    select: false,
+  },
   timeTables: [
     {
       type: mongoose.Schema.ObjectId,
@@ -41,6 +48,21 @@ const userSchema = new mongoose.Schema({
     },
   ],
 });
+
+// middlewares
+userSchema.pre('save', async function (next) {
+  const encryptedPassword = await bcrypt.hash(this.password, 12);
+  this.password = encryptedPassword;
+  next();
+});
+
+// instance methods
+userSchema.methods.correctPassword = async function (
+  candidatePassword,
+  userPassword
+) {
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
 
 const userModel = mongoose.model('user', userSchema);
 module.exports = userModel;
