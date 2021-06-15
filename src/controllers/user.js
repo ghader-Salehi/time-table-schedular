@@ -3,7 +3,7 @@ const AppError = require('../utils/AppError');
 const catchAsync = require('./../utils/catchAsync');
 const handleFactory = require('./handleFactory');
 
-exports.createNewUser = handleFactory.creatNewDocument(User);
+exports.createNewUser = handleFactory.createNewDocument(User);
 exports.getAllUsers = handleFactory.getListOfDocuments(User);
 exports.deleteUserByID = handleFactory.deleteOneByID(User);
 exports.updateUserProfileWithParamID = handleFactory.updateOneByID(User, {

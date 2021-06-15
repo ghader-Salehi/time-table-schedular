@@ -3,11 +3,8 @@ const hanldeFactory = require('./handleFactory');
 const Course = require('../models/course');
 const TimeTable = require('../models/timeTable');
 
-exports.getListOfCourses = hanldeFactory.getListOfDocuments(Course, {
-  title: req.query.search,
-  unitsCount: req.query.unitscount,
-});
-exports.createNewCourse = hanldeFactory.createNewCourse(Course);
+exports.getListOfCourses = hanldeFactory.getListOfDocuments(Course);
+exports.createNewCourse = hanldeFactory.createNewDocument(Course);
 exports.getCourseByID = hanldeFactory.getOneByID(Course);
 exports.updateCourseByID = hanldeFactory.updateOneByID(Course, {
   new: true,

@@ -1,6 +1,15 @@
 const express = require('express');
+const bellController = require('../controllers/bell');
 
 const router = express.Router();
+router
+  .route('/')
+  .get(bellController.getListOfBells)
+  .post(bellController.createNewBell);
+router
+  .route('/:id')
+  .get(bellController.getBellByID)
+  .delete(bellController.deleteBellByID)
+  .patch(bellController.updateBellByID);
 
-router.route('/').get().post();
-router.route('/:id').get().post().patch();
+module.exports = router;

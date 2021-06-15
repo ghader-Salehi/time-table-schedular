@@ -1,7 +1,7 @@
 const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
 
-exports.creatNewDocument = (Model) =>
+exports.createNewDocument = (Model) =>
   catchAsync(async (req, res, next) => {
     const modelName = Model.collection.collectionName;
     const doc = await Model.create(req.body); // this is not secure
