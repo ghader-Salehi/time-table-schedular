@@ -1,35 +1,14 @@
 const User = require('../models/user');
 const AppError = require('../utils/AppError');
 const catchAsync = require('./../utils/catchAsync');
+const handleFactory = require('./handleFactory');
 
-exports.createNewUser = catchAsync(async (req, res, next) => {
-  const user = await User.create({
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    code: req.body.code,
-    rule: req.body.rule,
-    password: req.body.password,
-  });
-  res.status(201).json({
-    status: 'Created',
-    message: 'A new user has been created',
-    success: true,
-    data: {
-      user,
-    },
-  });
-});
-
-exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.find();
-  res.status(200).json({
-    status: 'OK',
-    success: true,
-    message: 'List of users',
-    data: {
-      users,
-    },
-  });
+exports.createNewUser = handleFactory.creatNewDocument(User);
+exports.getAllUsers = handleFactory.getListOfDocuments(User);
+exports.deleteUserByID = handleFactory.deleteOneByID(User);
+exports.updateUserProfileWithParamID = handleFactory.updateOneByID(User, {
+  new: true,
+  runValidators: true,
 });
 
 exports.createAListOfUsers = catchAsync(async (req, res, next) => {
@@ -41,25 +20,6 @@ exports.createAListOfUsers = catchAsync(async (req, res, next) => {
     success: true,
     data: {
       users,
-    },
-  });
-});
-
-exports.updateUserProfileWithParamID = catchAsync(async (req, res, next) => {
-  const id = req.params.id;
-  if (req.body.password)
-    return next(new AppError("Can't update password using this endpoint", 400));
-  const user = await User.findByIdAndUpdate(id, req.body, {
-    new: true,
-    runValidators: true,
-  });
-  if (!user) return next(new AppError('No user with this ID exists', 404));
-  res.status(200).json({
-    status: 'success',
-    success: true,
-    message: `user with ID ${id} updated`,
-    data: {
-      user,
     },
   });
 });
@@ -100,20 +60,6 @@ exports.updateUserPassword = catchAsync(async (req, res, next) => {
     success: true,
     message: 'user password updated',
     data: {},
-  });
-});
-
-exports.deleteUserByID = catchAsync(async (req, res, next) => {
-  const id = req.params.id;
-  const user = await User.findOneAndDelete(id);
-  if (!user) return next(new AppError('No user with this ID exists', 404));
-  res.status(200).json({
-    status: 'success',
-    success: true,
-    message: `user with ID ${id} deleted`,
-    data: {
-      user,
-    },
   });
 });
 
