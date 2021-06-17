@@ -47,6 +47,18 @@ const userSchema = new mongoose.Schema({
       },
     },
   ],
+  courses: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'course',
+      validate: {
+        validator: function () {
+          return this.rule === 'master';
+        },
+        message: "Validation Error: Student can't choose courses",
+      },
+    },
+  ],
 });
 
 // middlewares

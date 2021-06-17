@@ -1,8 +1,10 @@
 const express = require('express');
 const courseController = require('../controllers/course');
+const authController = require('../controllers/auth');
 
 const router = express.Router();
 
+router.use(authController.protect);
 router
   .route('/')
   .get(courseController.getListOfCourses)
@@ -10,10 +12,10 @@ router
 router
   .route('/:id')
   .get(courseController.getCourseByID)
-  .put(courseController.updateCourseByID)
+  .patch(courseController.updateCourseByID)
   .delete(courseController.deleteCourseByID);
-router.get('/:id/timeTalbes', courseController.getCourseTimeTables);
-router.get('/:id/masters');
-router.post('/:id/choose');
+router.get('/:id/timeTables', courseController.getCourseTimeTables);
+router.get('/:id/masters', courseController.getCourseMasters);
+router.post('/:id/choose', courseController.chooseCourse);
 
 module.exports = router;

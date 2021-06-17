@@ -1,12 +1,13 @@
 const User = require('../models/user');
 const AppError = require('../utils/AppError');
 const catchAsync = require('./../utils/catchAsync');
-const handleFactory = require('./handleFactory');
+const factory = require('./handleFactory');
 
-exports.createNewUser = handleFactory.createNewDocument(User);
-exports.getAllUsers = handleFactory.getListOfDocuments(User);
-exports.deleteUserByID = handleFactory.deleteOneByID(User);
-exports.updateUserProfileWithParamID = handleFactory.updateOneByID(User, {
+exports.createNewUser = factory.createNewDocument(User);
+exports.getAllUsers = factory.getListOfDocuments(User);
+exports.getUserByID = factory.getOneByID(User);
+exports.deleteUserByID = factory.deleteOneByID(User);
+exports.updateUserProfileWithParamID = factory.updateOneByID(User, {
   new: true,
   runValidators: true,
 });
@@ -60,20 +61,6 @@ exports.updateUserPassword = catchAsync(async (req, res, next) => {
     success: true,
     message: 'user password updated',
     data: {},
-  });
-});
-
-exports.getUserByID = catchAsync(async (req, res, next) => {
-  const id = req.params.id;
-  const user = await User.findById(id);
-  if (!user) return next(new AppError('No user with this ID exists', 404));
-  res.status(200).json({
-    status: 'success',
-    success: true,
-    message: `user with ID ${id} found`,
-    data: {
-      user,
-    },
   });
 });
 

@@ -1,5 +1,6 @@
 const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
+const APIFeatures = require('../utils/apiFeatures');
 
 exports.createNewDocument = (Model) =>
   catchAsync(async (req, res, next) => {
@@ -16,19 +17,22 @@ exports.createNewDocument = (Model) =>
     });
   });
 
-exports.getListOfDocuments = (Model, findOptions) =>
+exports.getListOfDocuments = (Model, populations) =>
   catchAsync(async (req, res, next) => {
+    const findOptions = req.findOptions ? req.findOptions : {};
     const modelName = Model.collection.collectionName;
-    const doc = await Model.find({
-      findOptions,
-    });
-    // TODO: pagination
+    const features = new APIFeatures(Model.find(findOptions), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
+    const docs = await features.query.populate(populations);
     res.status(200).json({
       status: 'success',
       success: true,
       message: `${modelName}s found`,
       data: {
-        [modelName]: doc,
+        [modelName]: docs,
       },
     });
   });
@@ -37,7 +41,7 @@ exports.getOneByID = (Model, populations) =>
   catchAsync(async (req, res, next) => {
     const modelName = Model.collection.collectionName;
     if (!req.params.id) return next(new AppError('Provide an ID', 400));
-    const doc = await Model.findById(req.params.id);
+    const doc = await Model.findById(req.params.id).populate(populations);
     if (!doc)
       return next(
         new AppError(`${modelName} with ID ${req.params.id} does not exist`)
@@ -55,7 +59,7 @@ exports.getOneByID = (Model, populations) =>
 exports.updateOneByID = (Model, updateOptions) =>
   catchAsync(async (req, res, next) => {
     const modelName = Model.collection.collectionName;
-    const doc = await Model.findOneAndUpdate(
+    const doc = await Model.findByIdAndUpdate(
       req.params.id,
       req.body,
       updateOptions
@@ -77,7 +81,7 @@ exports.updateOneByID = (Model, updateOptions) =>
 exports.deleteOneByID = (Model) =>
   catchAsync(async (req, res, next) => {
     const modelName = Model.collection.collectionName;
-    const doc = await Model.findOneAndDelete(req.params.id);
+    const doc = await Model.findByIdAndDelete(req.params.id);
     if (!doc) return next(new AppError(`${modelName} does not exist`));
     res.status(200).json({
       status: 'OK',
