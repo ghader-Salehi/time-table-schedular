@@ -4,18 +4,20 @@ const authController = require('./../controllers/auth');
 
 const router = express.Router();
 
-router.use(authController.protect);
-router.get('/', userController.getAllUsers);
+router.use(authController.protect); // logged in user can access
 router
   .route('/profile')
   .patch(userController.updateUserProfile)
   .get(userController.getUserProfile);
 router.patch('/changepassword', userController.updateUserPassword);
+
+router.use(authController.restrictTo('admin')); // only admin can access
 router
   .route('/:id')
   .get(userController.getUserByID)
-  .patch(userController.updateUserProfileWithParamID)
   .delete(userController.deleteUserByID);
+router.get('/', userController.getAllUsers);
+router.route('/:id').patch(userController.updateUserProfileWithParamID);
 router.post('/add', userController.createNewUser);
 router.post('/addlist', userController.createAListOfUsers);
 

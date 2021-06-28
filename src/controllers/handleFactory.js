@@ -26,6 +26,8 @@ exports.getListOfDocuments = (Model, populations) =>
       .sort()
       .limitFields()
       .paginate();
+    if (req.query.rule)
+      features.query = features.query.find({ rule: req.query.rule });
     const docs = await features.query.populate(populations);
     res.status(200).json({
       status: 'success',

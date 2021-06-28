@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
   },
   rule: {
     type: String,
-    enum: ['master', 'student'],
+    enum: ['master', 'student', 'admin'],
     required: [true, 'Please provide users rule'],
   },
   password: {

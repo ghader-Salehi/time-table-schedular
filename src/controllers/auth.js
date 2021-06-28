@@ -34,6 +34,16 @@ exports.login = catchAsync(async (req, res, next) => {
   createAndSendToken(user, 201, res);
 });
 
+exports.restrictTo = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.rule))
+      return next(
+        new AppError('You are not allowed to perform this action', 403)
+      );
+    next();
+  };
+};
+
 exports.protect = catchAsync(async (req, res, next) => {
   if (!req.headers.authorization)
     return next(new AppError('Provide Authorization header', 403));

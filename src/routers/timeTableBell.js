@@ -1,14 +1,15 @@
 const express = require('express');
 const timeTableBellController = require('../controllers/timeTableBell');
+const authController = require('../controllers/auth');
 
 const router = express.Router();
-router
-  .route('/')
-  .get(timeTableBellController.getListOfTimeTableBells)
-  .post(timeTableBellController.createNewTimeTableBell);
-router
-  .route('/:id')
-  .get(timeTableBellController.getTimeTableBellByID)
-  .delete(timeTableBellController.deleteTimeTableBellByID);
+
+router.use(authController.restrictTo('admin', 'master'));
+router.get('/', timeTableBellController.getListOfTimeTableBells);
+router.get('/:id', timeTableBellController.getTimeTableBellByID);
+
+router.use(authController.restrictTo('admin'));
+router.post('/', timeTableBellController.createNewTimeTableBell);
+router.delete('/:id', timeTableBellController.deleteTimeTableBellByID);
 
 module.exports = router;

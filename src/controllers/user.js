@@ -26,6 +26,7 @@ exports.createAListOfUsers = catchAsync(async (req, res, next) => {
 });
 
 exports.updateUserProfile = catchAsync(async (req, res, next) => {
+  // logged in user updates his profile
   if (req.body.password)
     return next(new AppError("Can't update password using this endpoint", 400));
   const user = await User.findByIdAndUpdate(req.user.id, req.body, {
@@ -44,6 +45,7 @@ exports.updateUserProfile = catchAsync(async (req, res, next) => {
 });
 
 exports.updateUserPassword = catchAsync(async (req, res, next) => {
+  // logged in user updates his password
   if (!req.body.newPassword || !req.body.currentPassword)
     return next(new AppError('Provide new and old passwords', 400));
   if (
