@@ -1,0 +1,11 @@
+
+
+@import "node_modules/bootstrap/scss/bootstrap";
+@font-face {
+    font-family: iranYekan;
+    src: url('../assets/Fonts/iranyekanwebmedium.woff');
+}
+
+html,body{
+    font-family: iranYekan;
+}
