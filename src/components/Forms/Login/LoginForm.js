@@ -11,6 +11,8 @@ import {
 } from "@material-ui/core";
 import clsx from "clsx";
 import { Formik } from "formik";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const useStyle = makeStyles((theme) => ({
   fullwidth: {
@@ -31,6 +33,10 @@ const useStyle = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       fontSize: "11px",
     },
+  },
+  errorLable: {
+    fontSize: "11px",
+    color: "red",
   },
   submitButton: {
     borderRadius: "5px",
@@ -97,6 +103,19 @@ const useStyle = makeStyles((theme) => ({
 
 const LoginForm = () => {
   const classes = useStyle();
+
+  const test = () => {
+    toast.error('کاربری با این مشخصات یافت نشد!', {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+  };
+
   return (
     <div className="p-3 pt-0">
       <Formik
@@ -104,15 +123,16 @@ const LoginForm = () => {
         validate={(values) => {
           const errors = {};
           if (!values.userName) {
-            errors.userName = "userName Required";
+            errors.userName = "نام کاربری خود را وارد کنید";
           }
           if (!values.password) {
-            errors.password = "passsWord Required";
+            errors.password = "رمز عبور خود را وارد کنید";
           }
           return errors;
         }}
         onSubmit={(values, { setSubmitting }) => {
-          alert(JSON.stringify(values, null, 2));
+          
+          console.log(JSON.stringify(values))
         }}
       >
         {({
@@ -124,7 +144,7 @@ const LoginForm = () => {
           handleSubmit,
           isSubmitting,
         }) => (
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="d-flex flex-column align-items-center p-4">
               <FormControl className={clsx(classes.fullwidth)}>
                 <div
@@ -136,10 +156,19 @@ const LoginForm = () => {
                   <label className={clsx([classes.label])}>نام کاریری</label>
                   <OutlinedInput
                     className={clsx(["mb-4 mt-2", classes.font, classes.Input])}
-                    id="outlined-adornment-weight"
+                    id="userName"
+                    name="userName"
                     placeholder="نام کاربری خود را وارد کنید"
                     fullWidth
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.userName}
                   />
+                  {errors.userName && touched.userName ? (
+                    <div className={clsx([classes.errorLable, "mb-2"])}>
+                      * ورود نام کاربری الزامی است *
+                    </div>
+                  ) : null}
                 </div>
               </FormControl>
               <FormControl className={clsx(classes.fullwidth)}>
@@ -152,9 +181,19 @@ const LoginForm = () => {
                   <label className={clsx([classes.label])}>رمز عبور</label>
                   <OutlinedInput
                     className={clsx(["mb-4 mt-2", classes.font, classes.Input])}
+                    id="password"
+                    name="password"
                     placeholder="رمز عبور خود را وارد کنید"
                     fullWidth
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.password}
                   />
+                  {errors.password && touched.password ? (
+                    <div className={clsx([classes.errorLable, "mb-2"])}>
+                      * ورود رمز عبور الزامی است *
+                    </div>
+                  ) : null}
                 </div>
               </FormControl>
 
@@ -189,7 +228,9 @@ const LoginForm = () => {
                       ])}
                       href="#"
                     >
-                      <label for="remmeber-checkbox">مرا به خاطر بسپار</label>
+                      <label htmlFor="remmeber-checkbox">
+                        مرا به خاطر بسپار
+                      </label>
                     </Link>
                   </div>
                 </div>
@@ -213,7 +254,9 @@ const LoginForm = () => {
                     "mt-4 p-2 mb-3 shadow",
                     classes.submitButton,
                   ])}
+                  type="submit"
                   variant="outlined"
+                  onClick={test}
                 >
                   ورود
                 </Button>
@@ -222,6 +265,17 @@ const LoginForm = () => {
           </form>
         )}
       </Formik>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 };

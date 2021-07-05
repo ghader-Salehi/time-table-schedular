@@ -6,6 +6,14 @@
     src: url('../assets/Fonts/iranyekanwebmedium.woff');
 }
 
+.Toastify__toast-container {
+    text-align: right;
+}
+.Toastify__toast-body {
+    font-family: iranYekan;
+    font-size: 12px;
+}
+
 html,body{
     font-family: iranYekan;
 }
