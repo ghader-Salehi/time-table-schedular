@@ -10,12 +10,23 @@ import {
   Typography,
 } from "@material-ui/core";
 import clsx from "clsx";
-import MasterPhoto from "../../styles/icnos/profile-Master.svg";
+
+import AdminPhoto from "../../styles/icnos/profile-admin.svg";
 import blueCircle from "../../styles/icnos/rec-blue.svg";
 import upArrowBlue from "../../styles/icnos/up-arrow-blue.svg";
 import downArrowBlue from "../../styles/icnos/down-arrow-blue.svg";
 
+import MasterPhoto from "../../styles/icnos/profile-master.svg";
+import redCircle from "../../styles/icnos/rec-red.svg";
+import upArrowRed from "../../styles/icnos/up-arrow-red.svg";
+import downArrowRed from "../../styles/icnos/down-arrow-red.svg";
 
+import StudentPhoto from "../../styles/icnos/profile-student.svg";
+import GreenCircle from "../../styles/icnos/rec-green.svg";
+import upArrowGreen from "../../styles/icnos/up-arrow-green.svg";
+import downArrowGreen from "../../styles/icnos/down-arrow-green.svg";
+
+import { MASTER, ADMIN, STUDENT, GENERAL } from "../../constants/Roles";
 
 const useStyle = makeStyles((theme) => ({
   sideBarcontainer: {
@@ -65,13 +76,12 @@ const useStyle = makeStyles((theme) => ({
     },
   },
   subItemStyle: {
-
     padding: "8px 10px",
     borderRadius: "10px",
   },
 }));
 
-const Index = ({ content }) => {
+const Index = ({ content, role }) => {
   const classes = useStyle();
   const [activeItem, setActiveItem] = useState();
 
@@ -84,13 +94,37 @@ const Index = ({ content }) => {
     console.log(item.type);
   };
 
+  const handleIcons = (role) => {
+    if (role == ADMIN)
+      return (type) => {
+        if (type === "up") return <img src={upArrowBlue} />;
+        else if (type === "down") return <img src={downArrowBlue} />;
+        else if (type === "profile") return <img src={AdminPhoto} />;
+        else if (type === "circle") return <img src={blueCircle} />;
+      };
+    else if (role === MASTER)
+      return (type) => {
+        if (type === "up") return <img src={upArrowRed} />;
+        else if (type === "down") return <img src={downArrowRed} />;
+        else if (type === "profile") return <img src={MasterPhoto} />;
+        else if (type === "circle") return <img src={redCircle} />;
+      };
+    else if (role === STUDENT)
+      return (type) => {
+        if (type === "up") return <img src={upArrowGreen} />;
+        else if (type === "down") return <img src={downArrowGreen} />;
+        else if (type === "profile") return <img src={StudentPhoto} />;
+        else if (type === "circle") return <img src={GreenCircle} />;
+      };
+  };
+
   return (
     <>
       <div className="d-flex">
         <Paper className={clsx([classes.sideBarcontainer])}>
           <div className={clsx(["d-flex flex-column"])}>
             <div className="d-flex flex-column align-items-center mt-5 ">
-              <img src={MasterPhoto} />
+              {handleIcons(role)("profile")}
               <div className="mt-4">
                 <Typography className={clsx([classes.font])}>
                   قادر صالحی
@@ -110,17 +144,16 @@ const Index = ({ content }) => {
                     button
                     onClick={() => handleSelectItem(item, index)}
                   >
-                    <ListItemIcon>
-                      <img src={blueCircle} />
-                    </ListItemIcon>
+                    <ListItemIcon>{handleIcons(role)("circle")}</ListItemIcon>
                     <ListItemText
                       className={clsx([classes.font])}
                       primary={item.title}
                     />
                     {item.type == "dropDown" && (
                       <ListItemIcon className={clsx(["pr-5"])}>
-                        
-                        {activeItem === (index + item.title) ? <img src={upArrowBlue} /> : <img src={downArrowBlue} />}
+                        {activeItem === index + item.title
+                          ? handleIcons(role)("up")
+                          : handleIcons(role)("down")}
                       </ListItemIcon>
                     )}
                   </ListItem>
@@ -132,18 +165,16 @@ const Index = ({ content }) => {
                     >
                       <List>
                         {item.children.map((child, childInd) => (
-                          
-                            <ListItem
-                               className={classes.subItemStyle}
-                              key={childInd}
-                              button
-                            >
-                              <ListItemText
-                                className={clsx([classes.subItemText, "pr-4"])}
-                                primary={child.title}
-                              />
-                            </ListItem>
-                        
+                          <ListItem
+                            className={classes.subItemStyle}
+                            key={childInd}
+                            button
+                          >
+                            <ListItemText
+                              className={clsx([classes.subItemText, "pr-4"])}
+                              primary={child.title}
+                            />
+                          </ListItem>
                         ))}
                       </List>
                     </Collapse>
