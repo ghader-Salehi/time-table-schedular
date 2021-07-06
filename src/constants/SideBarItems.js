@@ -11,11 +11,11 @@ export const ITEMS = [
         type : 'dropDown',
         children:[
             {
-                name:'لیست کاربران',
+                title:'لیست کاربران',
                 path:'/usersList'
             },
             {
-                name:'ایجاد کاربران',
+                title:'ایجاد کاربران',
                 path:'/createUser'
             }
         ]
@@ -26,11 +26,11 @@ export const ITEMS = [
         type : 'dropDown',
         children:[
             {
-                name:'لیست اطلاعیه ها',
+                title:'لیست اطلاعیه ها',
                 path:'/announcementsList'
             },
             {
-                name:'ایجاد اطلاعیه',
+                title:'ایجاد اطلاعیه',
                 path:'/createAnnouncement'
             }
         ]
@@ -41,11 +41,11 @@ export const ITEMS = [
         type : 'dropDown',
         children:[
             {
-                name:'لیست دوره ها',
+                title:'لیست دوره ها',
                 path:'/coursesList'
             },
             {
-                name:'ایجاد دوره',
+                title:'ایجاد دوره',
                 path:'/createCourse'
             }
         ]
