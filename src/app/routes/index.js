@@ -6,6 +6,7 @@ import Header from "../../components/Header";
 import { ITEMS } from "../../constants/SideBarItems";
 import routes from "./routes";
 import clsx from "clsx";
+import {MASTER,ADMIN,STUDENT,GENERAL} from '../../constants/Roles'
 
 const useStyle = makeStyles((theme)=>({
     main:{
@@ -17,7 +18,7 @@ const Index = () => {
     const classes = useStyle()
   return (
     <>
-    <SideBar content={ITEMS} />
+    <SideBar role={ADMIN} content={ITEMS.filter((item)=>(item.part === ADMIN || item.part === GENERAL))} />
 
 
       <div className="d-flex justify-content-end">
@@ -27,7 +28,7 @@ const Index = () => {
             <Header/>
             <div className='container'>
 
-                1231
+              
             <Switch>
             {routes.map((item, index) => (
               <Route

@@ -3,7 +3,7 @@ import React from 'react'
 const Index = () =>  {
     return (
         <>
-            herer is dashboard
+           
         </>
     )
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import { makeStyles,IconButton ,Menu,MenuItem } from '@material-ui/core'
 import clsx from 'clsx'
 import menu from "../../styles/icnos/icons8-menu-vertical-96 (1).svg"
-
+import moment from 'jalali-moment'
 
 const useStyle  = makeStyles((theme)=>({
     fullWidth:{
@@ -21,7 +21,7 @@ const useStyle  = makeStyles((theme)=>({
 const Header = () => {
     const classes  =  useStyle();
     const [anchorEl, setAnchorEl] = React.useState(null);
-
+    const currentDateTime = moment()
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -39,7 +39,7 @@ const Header = () => {
                        تاریخ امروز  :
                        </div>
                        <div>
-                            1231321
+                       {moment().locale('fa').format('YYYY/MM/DD')}
                        </div>
                    </div>
                   
