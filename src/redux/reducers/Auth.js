@@ -1,10 +1,24 @@
+import {LOG_IN,LOG_OUT} from '../../constants/ActionTypes'
+
 
 const initialState = {
-    token:'',
-    user:''
+    token:JSON.parse(localStorage.getItem('token')),
+    user:JSON.parse(localStorage.getItem('user'))
 }
 
-const Auth  = ()=>{
+const Auth  = (state = initialState , action)=>{
+    switch(action.type){
+
+        case LOG_IN:
+            return {
+               ...action.payload
+            }
+        case LOG_OUT:
+            return { token: null, user: null };
+
+        default :
+            return state;
+    }
 
 
 }

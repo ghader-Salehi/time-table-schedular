@@ -34,7 +34,7 @@ const useStyle = makeStyles((theme) => ({
     maxHeight: '100vh',
     overflowY: 'auto',
 
-    position: 'absolute',
+    position: 'fixed',
     bottom: '0',
     top: '0',
     '&::-webkit-scrollbar': {

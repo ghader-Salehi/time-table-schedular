@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import {
   makeStyles,
   Typography,
@@ -13,6 +13,10 @@ import clsx from "clsx";
 import { Formik } from "formik";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import {Login} from "../../../api/Auth/Login"
+import { useSelector , useDispatch } from "react-redux";
+import {LoginAction} from '../../../redux/actions/Auth'
+
 
 const useStyle = makeStyles((theme) => ({
   fullwidth: {
@@ -103,7 +107,7 @@ const useStyle = makeStyles((theme) => ({
 
 const LoginForm = () => {
   const classes = useStyle();
-
+  const dispatch = useDispatch();
   const test = () => {
     toast.error('کاربری با این مشخصات یافت نشد!', {
       position: "bottom-right",
@@ -116,6 +120,16 @@ const LoginForm = () => {
       });
   };
 
+    const handleSubmit = ()=>{
+      
+    }
+
+    useEffect(()=>{
+
+    },[])
+
+
+
   return (
     <div className="p-3 pt-0">
       <Formik
@@ -123,16 +137,23 @@ const LoginForm = () => {
         validate={(values) => {
           const errors = {};
           if (!values.userName) {
-            errors.userName = "نام کاربری خود را وارد کنید";
+            errors.userName = "* ورود نام کاربری الزامی است *";
           }
           if (!values.password) {
-            errors.password = "رمز عبور خود را وارد کنید";
+            errors.password = " * ورود رمز عبور الزامی است *";
           }
           return errors;
         }}
-        onSubmit={(values, { setSubmitting }) => {
-          
+        onSubmit={(values) => {
+
           console.log(JSON.stringify(values))
+
+          Login(values.userName,values.password)
+            .then(res=>{
+                console.log(res);
+            }).catch(err=>{
+                console.log(err);
+            })
         }}
       >
         {({
@@ -166,7 +187,7 @@ const LoginForm = () => {
                   />
                   {errors.userName && touched.userName ? (
                     <div className={clsx([classes.errorLable, "mb-2"])}>
-                      * ورود نام کاربری الزامی است *
+                      {errors.userName}
                     </div>
                   ) : null}
                 </div>
@@ -191,7 +212,7 @@ const LoginForm = () => {
                   />
                   {errors.password && touched.password ? (
                     <div className={clsx([classes.errorLable, "mb-2"])}>
-                      * ورود رمز عبور الزامی است *
+                      {errors.password}
                     </div>
                   ) : null}
                 </div>
