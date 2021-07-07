@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React,{useEffect,useState} from "react";
 import {
   makeStyles,
   Typography,
@@ -8,7 +8,9 @@ import {
   Link,
   Checkbox,
   Button,
+  CircularProgress 
 } from "@material-ui/core";
+import {useHistory} from 'react-router-dom'
 import clsx from "clsx";
 import { Formik } from "formik";
 import { ToastContainer, toast } from "react-toastify";
@@ -108,17 +110,8 @@ const useStyle = makeStyles((theme) => ({
 const LoginForm = () => {
   const classes = useStyle();
   const dispatch = useDispatch();
-  const test = () => {
-    toast.error('کاربری با این مشخصات یافت نشد!', {
-      position: "bottom-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      });
-  };
+  const [isLoading, setIsLoading] = useState(false);
+  const history = useHistory();
 
     const handleSubmit = ()=>{
       
@@ -147,12 +140,25 @@ const LoginForm = () => {
         onSubmit={(values) => {
 
           console.log(JSON.stringify(values))
-
+          setIsLoading(true)
           Login(values.userName,values.password)
             .then(res=>{
                 console.log(res);
+                dispatch(LoginAction(res.data.data.token,res.data.data.user))
+                setIsLoading(false)
+                history.push('/dashboard')
             }).catch(err=>{
                 console.log(err);
+                setIsLoading(false)
+                 toast.error('کاربری با این مشخصات یافت نشد!', {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    });
             })
         }}
       >
@@ -267,6 +273,8 @@ const LoginForm = () => {
                   </Link>
                 </div>
               </div>
+              {isLoading &&   <CircularProgress />}
+            
               <div className={classes.fullwidth}>
                 <Button
                   className={clsx([
@@ -277,8 +285,9 @@ const LoginForm = () => {
                   ])}
                   type="submit"
                   variant="outlined"
-                  onClick={test}
+
                 >
+                  
                   ورود
                 </Button>
               </div>

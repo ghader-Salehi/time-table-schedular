@@ -7,6 +7,7 @@ import { ITEMS } from "../../constants/SideBarItems";
 import routes from "./routes";
 import clsx from "clsx";
 import {MASTER,ADMIN,STUDENT,GENERAL} from '../../constants/Roles'
+import {useSelector} from 'react-redux';
 
 const useStyle = makeStyles((theme)=>({
     main:{
@@ -16,9 +17,14 @@ const useStyle = makeStyles((theme)=>({
 
 const Index = () => {
     const classes = useStyle()
+    const role = useSelector(({ auth }) => auth.user.rule);
+
+    React.useEffect(()=>{
+      console.log(role);
+    },[])
   return (
     <>
-    <SideBar role={STUDENT} content={ITEMS.filter((item)=>(item.part === STUDENT || item.part === GENERAL))} />
+    <SideBar role={role} content={ITEMS.filter((item)=>(item.part === role || item.part === GENERAL))} />
 
 
       <div className="d-flex justify-content-end">

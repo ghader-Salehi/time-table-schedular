@@ -11,12 +11,14 @@ import { create } from "jss";
 import rtl from "jss-rtl";
 import "../styles/globals.scss";
 import Component from './routes/index'
+import { useSelector } from "react-redux";
 
 const Login = lazy(() => import("./routes/Login"));
 
 const App = () => {
   const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
   const rtlTheme = createMuiTheme({ direction: "rtl" });
+  const token = useSelector(({ auth }) => auth.token);
   const [flag,setflag]   = useState(false)
 
 
@@ -34,7 +36,7 @@ const App = () => {
         put a condition in login page  that if user token dosent expire go to dashboard
         */}
               <Route exact path="/" component={Login} />
-              {true &&  <Route exact path='/dashboard'  component={Component} />}
+              {token &&  <Route exact path='/dashboard'  component={Component} />}
               {/* 
           a component to render routes,if the user is logged then render the components
         */}

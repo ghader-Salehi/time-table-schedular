@@ -16,7 +16,7 @@ import blueCircle from '../../styles/icnos/rec-blue.svg';
 import upArrowBlue from '../../styles/icnos/up-arrow-blue.svg';
 import downArrowBlue from '../../styles/icnos/down-arrow-blue.svg';
 
-import MasterPhoto from '../../styles/icnos/profile-Master.svg';
+import MasterPhoto from '../../styles/icnos/profile-master.svg';
 import redCircle from '../../styles/icnos/rec-red.svg';
 import upArrowRed from '../../styles/icnos/up-arrow-red.svg';
 import downArrowRed from '../../styles/icnos/down-arrow-red.svg';
@@ -26,7 +26,10 @@ import GreenCircle from '../../styles/icnos/rec-green.svg';
 import upArrowGreen from '../../styles/icnos/up-arrow-green.svg';
 import downArrowGreen from '../../styles/icnos/down-arrow-green.svg';
 
+
 import { MASTER, ADMIN, STUDENT, GENERAL } from '../../constants/Roles';
+
+import {useSelector} from 'react-redux';
 
 const useStyle = makeStyles((theme) => ({
   sideBarcontainer: {
@@ -84,6 +87,7 @@ const useStyle = makeStyles((theme) => ({
 const Index = ({ content, role }) => {
   const classes = useStyle();
   const [activeItem, setActiveItem] = useState();
+  const user = useSelector(({ auth }) => auth.user);
 
   const handleSelectItem = (item, index) => {
     if (item.type === 'dropDown')
@@ -118,6 +122,15 @@ const Index = ({ content, role }) => {
       };
   };
 
+  const handleuserRole  = (role)=>{
+      if(role === ADMIN)
+          return 'مدیر سیستم'
+      else if(role === MASTER)
+          return 'استاد'
+      else if(role === STUDENT)
+        return 'دانشجو'
+  }
+
   return (
     <>
       <div className='d-flex'>
@@ -127,12 +140,12 @@ const Index = ({ content, role }) => {
               {handleIcons(role)('profile')}
               <div className='mt-4'>
                 <Typography className={clsx([classes.font])}>
-                  قادر صالحی
+                  {user.firstname + " " + user.lastname}
                 </Typography>
               </div>
               <div>
                 <Typography className={clsx([classes.font])} variant='caption'>
-                  ادمین سیستم
+                  {handleuserRole(user.rule)}
                 </Typography>
               </div>
             </div>

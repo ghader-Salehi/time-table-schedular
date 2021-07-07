@@ -3,6 +3,9 @@ import { makeStyles,IconButton ,Menu,MenuItem } from '@material-ui/core'
 import clsx from 'clsx'
 import menu from "../../styles/icnos/icons8-menu-vertical-96 (1).svg"
 import moment from 'jalali-moment'
+import {LogoutAction} from '../../redux/actions/Auth'
+import { useDispatch } from "react-redux";
+import { useHistory } from 'react-router'
 
 const useStyle  = makeStyles((theme)=>({
     fullWidth:{
@@ -23,6 +26,9 @@ const Header = () => {
     const classes  =  useStyle();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const currentDateTime = moment()
+    const dispatch = useDispatch();
+    const history  = useHistory();
+
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -32,6 +38,12 @@ const Header = () => {
         setAnchorEl(null);
       };
 
+      const handleLogout = ()=>{
+        dispatch(LogoutAction())
+        handleClose()
+        history.push('/')
+      }
+
     return (
         <>
             <div className={clsx([classes.fullWidth,'d-flex justify-content-between align-items-center',classes.container,classes.font])}>
@@ -40,7 +52,7 @@ const Header = () => {
                        تاریخ امروز  :
                        </div>
                        <div>
-                       {moment().locale('fa').format('YYYY/MM/DD')}
+                                {moment().locale('fa').format('Do MMM YYYY')}
                        </div>
                    </div>
                   
@@ -59,7 +71,7 @@ const Header = () => {
 
                             >
                             <MenuItem className={clsx([classes.font,'text-center'])} onClick={handleClose}>تغییر رمز عبور</MenuItem>
-                            <MenuItem className={clsx([classes.font,'text-center'])} onClick={handleClose}>خروج</MenuItem>
+                            <MenuItem className={clsx([classes.font,'text-center'])} onClick={handleLogout}>خروج</MenuItem>
                         </Menu>
                       
                     </div>

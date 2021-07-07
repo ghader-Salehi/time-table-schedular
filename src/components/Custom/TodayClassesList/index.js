@@ -1,5 +1,5 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core'
+import { makeStyles ,Typography} from '@material-ui/core'
 import clsx from 'clsx'
 import Class from './Class'
 
@@ -7,6 +7,7 @@ const useStyle = makeStyles(() => ({
 
     font: {
       fontFamily: "iranYekan",
+      color: "#8B8989",
     },
     container:{
         borderRadius:'5px',
@@ -31,18 +32,30 @@ const Index = ({role,content })=> {
                 <div className='col-3 d-flex justify-content-center'>
                     زمان برگزاری
                 </div>
+                {role !== 'master' && 
                 <div className='col-3 d-flex justify-content-center'> 
                         استاد
-                </div>
+                </div>}
+                
                 <div className='col-3 d-flex justify-content-center'>
                     محل برگزاری
                 </div>
             </div>
+            { !content.length && 
+                <div className='d-flex justify-content-center mt-5'>
+                    <Typography className={clsx([classes.font,'mt-5'])} >
+                         هیچ کلاسی برای برگزاری وجود ندارد       
+                    </Typography>
+                      
+                </div>
+                   
+                }
             <div className='mb-5'>
+                {}
                     {content.map((item,index)=>{
                         return(
                             
-                                <Class data={item}/>
+                                <Class role={role} data={item}/>
                         
                         
                         )
