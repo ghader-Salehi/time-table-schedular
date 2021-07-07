@@ -14,6 +14,8 @@ const app = express();
 
 app.use(morgan('dev'));
 app.use(express.json({ limit: '10kb' }));
+app.use(corse());
+
 app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/bells', bellRouter);
