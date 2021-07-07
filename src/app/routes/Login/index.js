@@ -41,7 +41,7 @@ const Index = () => {
 
                         <div className={clsx([' bg-white shadow pr-0 pl-0'],classes.containerRadius,classes.containerStyle)}>
                             <div className={clsx([classes.header,'p-3 d-flex justify-content-center mb-2'])}> 
-                              <Typography className={classes.font}   >
+                              <Typography className={classes.font}>
                                   ورود به پنل کاریری
                               </Typography>
                          
