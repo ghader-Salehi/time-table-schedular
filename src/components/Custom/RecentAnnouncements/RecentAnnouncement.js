@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles, Typography,Button } from "@material-ui/core";
-
+import {ADMIN,MASTER,STUDENT} from "../../../constants/Roles"
 import clsx from "clsx";
 const useStyle = makeStyles(() => ({
   container: {
@@ -11,7 +11,7 @@ const useStyle = makeStyles(() => ({
     fontFamily: "iranYekan",
     color:'#8B8989'
   },
-  AddminButtonStyle:{
+  AdminButtonStyle:{
     
     backgroundColor:'#7A8FF6',
     color:'white',
@@ -22,10 +22,45 @@ const useStyle = makeStyles(() => ({
     padding:'4px'
     
 }
+,
+MasterButtonStyle:{
+    backgroundColor:'#F6877A',
+    color:'white',
+    '&:hover':{
+        backgroundColor: "#F36554",
+    }
+    ,fontSize:'12px',
+    padding:'4px'
+
+},
+StudentButtonStyle:{
+    backgroundColor:'#93BB90',
+    color:'white',
+    '&:hover':{
+        backgroundColor: "#71CE6A",
+    } 
+    ,fontSize:'12px',
+    padding:'4px'
+
+}
 }));
 
-const RecentAnnouncement = ({data}) => {
+const RecentAnnouncement = ({data,role}) => {
   const classes = useStyle();
+
+
+  const handleButtonStyle = (role)=>{
+    if(role === ADMIN)
+        return classes.AdminButtonStyle;
+    else if(role === MASTER)
+        return classes.MasterButtonStyle;
+
+    else if(role === STUDENT)
+        return classes.StudentButtonStyle
+    
+}
+
+  
   return (
     <>
       <div
@@ -67,7 +102,7 @@ const RecentAnnouncement = ({data}) => {
         </div>
         <div className="d-flex justify-content-center mt-2">
 
-            <Button className={clsx([classes.font,classes.AddminButtonStyle,'shadow'])}>
+            <Button className={clsx([classes.font,handleButtonStyle(role),'shadow'])}>
                 مشاهده
             </Button>
 

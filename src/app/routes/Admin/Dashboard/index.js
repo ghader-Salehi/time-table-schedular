@@ -22,13 +22,13 @@ const Index = () =>  {
                        اخرین اطلاعیه ها
                    </Typography>
                 </div>
-                 <RecentAnnouncements role={ADMIN} content={[1,2,3]}/>
+                 <RecentAnnouncements role={STUDENT} content={[1,2,3]}/>
                  <div className='d-flex mt-4'>
                    <Typography className={clsx([classes.font])}>
                        کلاس های امروز
                    </Typography>
                 </div>
-                <TodayClassesList  role={ADMIN} content={[1,2,3,1,5,5,]} />
+                <TodayClassesList  role={STUDENT} content={[1,2,3,1,5,5,]} />
                 <div className='d-flex justify-content-center mb-5 mt-3 pb-5'>
                         <Pagination  count={10} shape="rounded"  variant="outlined"/>
                 </div>

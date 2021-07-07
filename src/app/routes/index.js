@@ -18,7 +18,7 @@ const Index = () => {
     const classes = useStyle()
   return (
     <>
-    <SideBar role={ADMIN} content={ITEMS.filter((item)=>(item.part === ADMIN || item.part === GENERAL))} />
+    <SideBar role={STUDENT} content={ITEMS.filter((item)=>(item.part === STUDENT || item.part === GENERAL))} />
 
 
       <div className="d-flex justify-content-end">

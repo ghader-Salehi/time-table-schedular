@@ -13,7 +13,8 @@ const useStyle  = makeStyles((theme)=>({
         backgroundColor:'#F1EFF5'
     },
     font:{
-        fontFamily:'iranYekan'
+        fontFamily:'iranYekan',
+        color:'#8B8989'
     }
 
 }))
@@ -33,7 +34,7 @@ const Header = () => {
 
     return (
         <>
-            <div className={clsx([classes.fullWidth,'d-flex justify-content-between align-items-center',classes.container])}>
+            <div className={clsx([classes.fullWidth,'d-flex justify-content-between align-items-center',classes.container,classes.font])}>
                    <div className='mr-3 d-flex '>
                        <div className='ml-3'>
                        تاریخ امروز  :
