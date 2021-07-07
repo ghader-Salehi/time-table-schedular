@@ -1,8 +1,7 @@
-import axiosObj from '../index'
+import axiosObj from '../index';
 
-const API = '/auth'
+const API = '/auth';
 
-export const Login = async(username,password)=>{
-        return await axiosObj.post(API + '/auth/login',{code:username,password});
-}
-
+export const Login = async (username, password) => {
+  return await axiosObj.post(API + '/auth/login', { code: username, password });
+};
