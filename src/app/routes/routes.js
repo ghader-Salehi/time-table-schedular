@@ -8,15 +8,15 @@ const routes = [
     { path:'/dashboard/usersList' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/User/UsersList')) },
     { path:'/dashboard/createUser' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/User/CreateUser')) },
     
-    { path:'/announcementsList' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/Announcement/AnnouncementList')) },
-    { path:'/createAnnouncement' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/Announcement/CreateAnnouncemnet')) },
+    { path:'/dashboard/announcementsList' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/Announcement/AnnouncementList')) },
+    { path:'/dashboard/createAnnouncement' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/Announcement/CreateAnnouncemnet')) },
 
-    { path:'/coursesList' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/Course/CourseLists')) },
-    { path:'/createCourse' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/Course/CreateCourse')) },
+    { path:'/dashboard/coursesList' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/Course/CourseLists')) },
+    { path:'/dashboard/createCourse' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/Course/CreateCourse')) },
 
-    { path:'/timeTable' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/TimeTable')) },
-    { path:'/workingDays' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/WorkingDays')) },
-    { path:'/profile' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/Profile')) },
+    { path:'/dashboard/timeTable' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/TimeTable')) },
+    { path:'/dashboard/workingDays' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/WorkingDays')) },
+    { path:'/dashboard/profile' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/Profile')) },
 ]
 
 export default routes;

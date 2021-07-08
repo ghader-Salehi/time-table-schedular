@@ -13,3 +13,16 @@ export const getLlistOfUsers = async (role) => {
 export const getUserById = async (id) => {
   return await axiosObj.get(`${API}/users/${id}`);
 };
+
+export const deleteUser = async (id) => {
+  return await axiosObj.delete(`${API}/users/${id}`);
+};
+
+export const updateUser = async (id,data) => {
+  return await axiosObj.patch(`${API}/users/${id}`,data);
+};
+
+
+export const createUser = async (data) => {
+  return await axiosObj.post(`${API}/users/add`,data);
+};

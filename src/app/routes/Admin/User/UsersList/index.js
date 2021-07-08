@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{useContext}from "react";
 import {
   makeStyles,
   AppBar,
@@ -11,6 +11,7 @@ import PropTypes from "prop-types";
 import clsx from "clsx";
 import MastersList from "./MastersList";
 import StudentList from "./StudentsList";
+import { UserWrapper } from "../../../../../context/UserContext";
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -59,7 +60,6 @@ const useStyles = makeStyles((theme) => ({
   indicator: {
     backgroundColor: "#7A8FF6",
   },
-
 }));
 
 const Index = () => {
@@ -72,44 +72,43 @@ const Index = () => {
 
   return (
     <>
-      <div>
-        <AppBar
-          className={clsx(["mt-5", classes.font])}
-          classes={{
-            root: classes.root,
-          }}
-          position="static"
-        >
-          <Tabs
-            classes={{ indicator: classes.indicator }}
-            value={value}
-            onChange={handleChange}
-            aria-label="simple tabs example"
+
+        <div>
+          <AppBar
+            className={clsx(["mt-5", classes.font])}
+            classes={{
+              root: classes.root,
+            }}
+            position="static"
           >
-            <Tab
-              className={classes.font}
-              label="لیست اساتید"
-              {...a11yProps(0)}
-            />
-            <Tab
-              className={classes.font}
-              label="لیست دانشجویان"
-              {...a11yProps(1)}
-            />
-          </Tabs>
-        </AppBar>
-        <TabPanel value={value} index={0}>
-          <MastersList  index={0} />
-        </TabPanel>
-        <TabPanel  value={value} index={1}>
-          <StudentList index={1} />
-        </TabPanel>
-      </div>
+            <Tabs
+              classes={{ indicator: classes.indicator }}
+              value={value}
+              onChange={handleChange}
+              aria-label="simple tabs example"
+            >
+              <Tab
+                className={classes.font}
+                label="لیست اساتید"
+                {...a11yProps(0)}
+              />
+              <Tab
+                className={classes.font}
+                label="لیست دانشجویان"
+                {...a11yProps(1)}
+              />
+            </Tabs>
+          </AppBar>
+          <TabPanel value={value} index={0}>
+            <MastersList index={0} />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <StudentList index={1} />
+          </TabPanel>
+        </div>
 
-      <div>
+        <div></div>
 
-     
-      </div>
     </>
   );
 };
