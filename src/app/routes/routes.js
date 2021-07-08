@@ -5,8 +5,8 @@ const routes = [
     // admin
     { path:'/dashboard' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/Dashboard')) },
 
-    { path:'/usersList' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/User/Users')) },
-    { path:'/createUser' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/User/CreateUser')) },
+    { path:'/dashboard/usersList' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/User/UsersList')) },
+    { path:'/dashboard/createUser' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/User/CreateUser')) },
     
     { path:'/announcementsList' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/Announcement/AnnouncementList')) },
     { path:'/createAnnouncement' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/Announcement/CreateAnnouncemnet')) },

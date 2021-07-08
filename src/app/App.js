@@ -36,7 +36,7 @@ const App = () => {
         put a condition in login page  that if user token dosent expire go to dashboard
         */}
               <Route exact path="/" component={Login} />
-              {token &&  <Route exact path='/dashboard'  component={Component} />}
+              {token &&  <Route  path='/dashboard'  component={Component} />}
               {/* 
           a component to render routes,if the user is logged then render the components
         */}

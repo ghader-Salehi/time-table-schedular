@@ -1,4 +1,4 @@
-import axiosObj from '../index';
+import {axiosObj} from '../index';
 
 const API = '/api';
 

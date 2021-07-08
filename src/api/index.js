@@ -9,8 +9,10 @@ const axiosObj = axios.create({
 const listener = () => {
   const token = store.getState().auth.token;
 
-  axios.defaults.headers['Authorization'] = token ? 'Bearer ' + token : null;
+
+  axios.defaults.headers['Authorization'] = token ?  token : null;
+  console.log(axios.defaults);
 };
 store.subscribe(listener);
 
-export default axiosObj;
+export {axiosObj};

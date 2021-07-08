@@ -30,6 +30,7 @@ import downArrowGreen from '../../styles/icnos/down-arrow-green.svg';
 import { MASTER, ADMIN, STUDENT, GENERAL } from '../../constants/Roles';
 
 import {useSelector} from 'react-redux';
+import {useHistory} from 'react-router-dom'
 
 const useStyle = makeStyles((theme) => ({
   sideBarcontainer: {
@@ -88,13 +89,14 @@ const Index = ({ content, role }) => {
   const classes = useStyle();
   const [activeItem, setActiveItem] = useState();
   const user = useSelector(({ auth }) => auth.user);
+  const history = useHistory()
 
   const handleSelectItem = (item, index) => {
     if (item.type === 'dropDown')
       setActiveItem(
         activeItem === index + item.title ? undefined : index + item.title
       );
-
+      history.push(item.path)
     console.log(item.type);
   };
 
@@ -182,6 +184,7 @@ const Index = ({ content, role }) => {
                             className={classes.subItemStyle}
                             key={childInd}
                             button
+                            onClick={()=>{ history.push('/dashboard'+child.path)}}
                           >
                             <ListItemText
                               className={clsx([classes.subItemText, 'pr-4'])}
