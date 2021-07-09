@@ -7,6 +7,7 @@ const router = express.Router();
 // logged in users can access
 router.use(authController.protect);
 router.get('/', timeTableController.getListOfTimeTalbes);
+router.get('/todayClasses', timeTableController.getTodayClasses);
 router.get('/:id', timeTableController.getTimeTableByID);
 
 // only student can access
@@ -17,6 +18,10 @@ router.post(
 );
 
 // only admin can access
-router.post('/startProcess', authController.restrictTo('admin'));
+router.post(
+  '/startProcess',
+  authController.restrictTo('admin'),
+  timeTableController.startProcess
+);
 
 module.exports = router;
