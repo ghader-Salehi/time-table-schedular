@@ -23,45 +23,58 @@ const routes = [
   },
 
   {
-    path: '/announcementsList',
+    path: '/dashboard/usersList',
+    part: 'admin',
+    exact: true,
+    component: lazy(() => import('./Admin/User/UsersList')),
+  },
+  {
+    path: '/dashboard/createUser',
+    part: 'admin',
+    exact: true,
+    component: lazy(() => import('./Admin/User/CreateUser')),
+  },
+
+  {
+    path: '/dashboard/announcementsList',
     part: 'admin',
     exact: true,
     component: lazy(() => import('./Admin/Announcement/AnnouncementList')),
   },
   {
-    path: '/createAnnouncement',
+    path: '/dashboard/createAnnouncement',
     part: 'admin',
     exact: true,
     component: lazy(() => import('./Admin/Announcement/CreateAnnouncemnet')),
   },
 
   {
-    path: '/coursesList',
+    path: '/dashboard/coursesList',
     part: 'admin',
     exact: true,
     component: lazy(() => import('./Admin/Course/CourseLists')),
   },
   {
-    path: '/createCourse',
+    path: '/dashboard/createCourse',
     part: 'admin',
     exact: true,
     component: lazy(() => import('./Admin/Course/CreateCourse')),
   },
 
   {
-    path: '/timeTable',
+    path: '/dashboard/timeTable',
     part: 'admin',
     exact: true,
     component: lazy(() => import('./Admin/TimeTable')),
   },
   {
-    path: '/workingDays',
+    path: '/dashboard/workingDays',
     part: 'admin',
     exact: true,
     component: lazy(() => import('./Admin/WorkingDays')),
   },
   {
-    path: '/profile',
+    path: '/dashboard/profile',
     part: 'admin',
     exact: true,
     component: lazy(() => import('./Admin/Profile')),
@@ -69,7 +82,7 @@ const routes = [
 
   // master
   {
-    path: '/masterWorkingDays',
+    path: '/dashboard/masterWorkingDays',
     part: 'master',
     exact: true,
     component: lazy(() => import('./Master/WorkingDays')),

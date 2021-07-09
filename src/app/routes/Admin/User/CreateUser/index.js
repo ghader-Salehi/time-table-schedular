@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useContext} from "react";
 import {
   makeStyles,
   AppBar,
@@ -11,6 +11,7 @@ import PropTypes from "prop-types";
 import clsx from "clsx";
 import CreateMaster from "./CreateMaster";
 import CreateStudent from "./CreateStudent";
+import { UserWrapper,UserContext } from "../../../../../context/UserContext";
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -50,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#F1EFF5",
     boxShadow: "0px 0px 0px 0px ",
     borderRadius: "10px",
-    padding:'0 20px'
+    padding: "0 20px",
   },
   font: {
     fontFamily: "iranYekan",
@@ -61,50 +62,56 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
 function Index() {
-    const [value, setValue] = React.useState(0);
-    const classes = useStyles();
+  const [user,setUser] = useContext(UserContext);
+  const [value, setValue] = React.useState(user.rule === 'master' ? 1 : 0);
+  const classes = useStyles();
 
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-      };
+  const handleInitailValue =()=>{
+
+  }
+  
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  React.useEffect(()=>{
+      console.log(user);
+  },[])
 
   return (
     <>
-      <div>
-        <AppBar
-          className={clsx(["mt-5", classes.font])}
-          classes={{
-            root: classes.root,
-          }}
-          position="static"
-        >
-          <Tabs
-            classes={{ indicator: classes.indicator }}
-            value={value}
-            onChange={handleChange}
-            aria-label="simple tabs example"
+   
+        <div>
+          <AppBar
+            className={clsx(["mt-5", classes.font])}
+            classes={{
+              root: classes.root,
+            }}
+            position="static"
           >
-            <Tab
-              className={classes.font}
-              label="دانشجو"
-              {...a11yProps(0)}
-            />
-            <Tab
-              className={classes.font}
-              label="استاد"
-              {...a11yProps(1)}
-            />
-          </Tabs>
-        </AppBar>
-        <TabPanel value={value} index={0}>
-          <CreateStudent index={0} />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <CreateMaster index={1} />
-        </TabPanel>
-      </div>
+            <Tabs
+              classes={{ indicator: classes.indicator }}
+              value={value}
+              onChange={handleChange}
+              aria-label="simple tabs example"
+            >
+              <Tab className={classes.font} label="دانشجو" {...a11yProps(0)} />
+              <Tab className={classes.font} label="استاد" {...a11yProps(1)} />
+            </Tabs>
+          </AppBar>
+          <TabPanel value={value} index={0}>
+            <CreateStudent index={0} />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <CreateMaster index={1} />
+          </TabPanel>
+        </div>
+    
     </>
   );
 }

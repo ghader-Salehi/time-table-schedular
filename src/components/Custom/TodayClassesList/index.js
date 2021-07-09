@@ -51,7 +51,7 @@ const Index = ({role,content })=> {
                    
                 }
             <div className='mb-5'>
-                {}
+                
                     {content.map((item,index)=>{
                         return(
                             
