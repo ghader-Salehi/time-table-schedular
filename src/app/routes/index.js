@@ -1,18 +1,18 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { makeStyles } from "@material-ui/core";
-import SideBar from "../../components/SideBar";
-import Header from "../../components/Header";
-import { ITEMS } from "../../constants/SideBarItems";
-import routes from "./routes";
-import clsx from "clsx";
-import { MASTER, ADMIN, STUDENT, GENERAL } from "../../constants/Roles";
-import { useSelector } from "react-redux";
-import { UserWrapper } from "../../context/UserContext";
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core';
+import SideBar from '../../components/SideBar';
+import Header from '../../components/Header';
+import { ITEMS } from '../../constants/SideBarItems';
+import routes from './routes';
+import clsx from 'clsx';
+import { MASTER, ADMIN, STUDENT, GENERAL } from '../../constants/Roles';
+import { useSelector } from 'react-redux';
+import { UserWrapper } from '../../context/UserContext';
 
 const useStyle = makeStyles((theme) => ({
   main: {
-    width: "calc(100% - 300px)",
+    width: 'calc(100% - 300px)',
   },
 }));
 
@@ -33,10 +33,10 @@ const Index = () => {
           )}
         />
 
-        <div className="d-flex justify-content-end">
-          <div className={clsx(["d-flex flex-column ", classes.main])}>
+        <div className='d-flex justify-content-end'>
+          <div className={clsx(['d-flex flex-column ', classes.main])}>
             <Header />
-            <div className="container">
+            <div className='container'>
               <Switch>
 
 

@@ -1,84 +1,98 @@
-import React from 'react'
-import { makeStyles,IconButton ,Menu,MenuItem } from '@material-ui/core'
-import clsx from 'clsx'
-import menu from "../../styles/icnos/icons8-menu-vertical-96 (1).svg"
-import moment from 'jalali-moment'
-import {LogoutAction} from '../../redux/actions/Auth'
-import { useDispatch } from "react-redux";
-import { useHistory } from 'react-router'
+import React from 'react';
+import { makeStyles, IconButton, Menu, MenuItem } from '@material-ui/core';
+import clsx from 'clsx';
+import menu from '../../styles/icnos/icons8-menu-vertical-96 (1).svg';
+import moment from 'jalali-moment';
+import { LogoutAction } from '../../redux/actions/Auth';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 
-const useStyle  = makeStyles((theme)=>({
-    fullWidth:{
-        width:'100%',
-    },
-    container:{
-        height:'53px',
-        backgroundColor:'#F1EFF5'
-    },
-    font:{
-        fontFamily:'iranYekan',
-        color:'#8B8989'
-    }
-
-}))
+const useStyle = makeStyles((theme) => ({
+  fullWidth: {
+    width: '100%',
+  },
+  container: {
+    height: '53px',
+    backgroundColor: '#F1EFF5',
+  },
+  font: {
+    fontFamily: 'iranYekan',
+    color: '#8B8989',
+  },
+}));
 
 const Header = () => {
-    const classes  =  useStyle();
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const currentDateTime = moment()
-    const dispatch = useDispatch();
-    const history  = useHistory();
+  const classes = useStyle();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const currentDateTime = moment();
+  const dispatch = useDispatch();
+  const history = useHistory();
 
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-      };
-    
-      const handleClose = () => {
-        setAnchorEl(null);
-      };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-      const handleLogout = ()=>{
-        dispatch(LogoutAction())
-        handleClose()
-        history.push('/')
-      }
+  const handleLogout = () => {
+    dispatch(LogoutAction());
+    handleClose();
+    history.push('/');
+  };
 
-    return (
-        <>
-            <div className={clsx([classes.fullWidth,'d-flex justify-content-between align-items-center',classes.container,classes.font])}>
-                   <div className='mr-3 d-flex '>
-                       <div className='ml-3'>
-                       تاریخ امروز  :
-                       </div>
-                       <div>
-                                {moment().locale('fa').format('Do MMM YYYY')}
-                       </div>
-                   </div>
-                  
-                   <div className={clsx(['ml-2',])}>
-                       <IconButton  aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                            <img className={clsx([classes.buttonStyle])} style={{width:'25px',height:'25px'}} src={menu} />
-                       </IconButton >
-                       <Menu
-                          
-                          id="simple-menu"
-                          anchorEl={anchorEl}
-                          keepMounted
-                          open={Boolean(anchorEl)}
-                          onClose={handleClose}
+  return (
+    <>
+      <div
+        className={clsx([
+          classes.fullWidth,
+          'd-flex justify-content-between align-items-center',
+          classes.container,
+          classes.font,
+        ])}
+      >
+        <div className='mr-3 d-flex '>
+          <div className='ml-3'>تاریخ امروز :</div>
+          <div>{moment().locale('fa').format('Do MMM YYYY')}</div>
+        </div>
 
+        <div className={clsx(['ml-2'])}>
+          <IconButton
+            aria-controls='simple-menu'
+            aria-haspopup='true'
+            onClick={handleClick}
+          >
+            <img
+              className={clsx([classes.buttonStyle])}
+              style={{ width: '25px', height: '25px' }}
+              src={menu}
+            />
+          </IconButton>
+          <Menu
+            id='simple-menu'
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem
+              className={clsx([classes.font, 'text-center'])}
+              onClick={handleClose}
+            >
+              تغییر رمز عبور
+            </MenuItem>
+            <MenuItem
+              className={clsx([classes.font, 'text-center'])}
+              onClick={handleLogout}
+            >
+              خروج
+            </MenuItem>
+          </Menu>
+        </div>
+      </div>
+    </>
+  );
+};
 
-                            >
-                            <MenuItem className={clsx([classes.font,'text-center'])} onClick={handleClose}>تغییر رمز عبور</MenuItem>
-                            <MenuItem className={clsx([classes.font,'text-center'])} onClick={handleLogout}>خروج</MenuItem>
-                        </Menu>
-                      
-                    </div>
-                
-            </div>
-        </>
-    )
-}
-
-export default Header
+export default Header;
