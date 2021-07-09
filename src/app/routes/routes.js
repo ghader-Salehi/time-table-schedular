@@ -1,22 +1,79 @@
-import { lazy } from "react";
+import { lazy } from 'react';
 
 const routes = [
+  // admin
+  {
+    path: '/dashboard',
+    part: 'admin',
+    exact: true,
+    component: lazy(() => import('./Admin/Dashboard')),
+  },
 
-    // admin
-    { path:'/dashboard' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/Dashboard')) },
+  {
+    path: '/dashboard/usersList',
+    part: 'admin',
+    exact: true,
+    component: lazy(() => import('./Admin/User/UsersList')),
+  },
+  {
+    path: '/dashboard/createUser',
+    part: 'admin',
+    exact: true,
+    component: lazy(() => import('./Admin/User/CreateUser')),
+  },
 
-    { path:'/dashboard/usersList' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/User/UsersList')) },
-    { path:'/dashboard/createUser' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/User/CreateUser')) },
-    
-    { path:'/announcementsList' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/Announcement/AnnouncementList')) },
-    { path:'/createAnnouncement' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/Announcement/CreateAnnouncemnet')) },
+  {
+    path: '/announcementsList',
+    part: 'admin',
+    exact: true,
+    component: lazy(() => import('./Admin/Announcement/AnnouncementList')),
+  },
+  {
+    path: '/createAnnouncement',
+    part: 'admin',
+    exact: true,
+    component: lazy(() => import('./Admin/Announcement/CreateAnnouncemnet')),
+  },
 
-    { path:'/coursesList' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/Course/CourseLists')) },
-    { path:'/createCourse' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/Course/CreateCourse')) },
+  {
+    path: '/coursesList',
+    part: 'admin',
+    exact: true,
+    component: lazy(() => import('./Admin/Course/CourseLists')),
+  },
+  {
+    path: '/createCourse',
+    part: 'admin',
+    exact: true,
+    component: lazy(() => import('./Admin/Course/CreateCourse')),
+  },
 
-    { path:'/timeTable' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/TimeTable')) },
-    { path:'/workingDays' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/WorkingDays')) },
-    { path:'/profile' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/Profile')) },
-]
+  {
+    path: '/timeTable',
+    part: 'admin',
+    exact: true,
+    component: lazy(() => import('./Admin/TimeTable')),
+  },
+  {
+    path: '/workingDays',
+    part: 'admin',
+    exact: true,
+    component: lazy(() => import('./Admin/WorkingDays')),
+  },
+  {
+    path: '/profile',
+    part: 'admin',
+    exact: true,
+    component: lazy(() => import('./Admin/Profile')),
+  },
+
+  // master
+  {
+    path: '/masterWorkingDays',
+    part: 'master',
+    exact: true,
+    component: lazy(() => import('./Master/WorkingDays')),
+  },
+];
 
 export default routes;

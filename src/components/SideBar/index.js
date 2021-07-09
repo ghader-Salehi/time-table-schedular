@@ -26,11 +26,10 @@ import GreenCircle from '../../styles/icnos/rec-green.svg';
 import upArrowGreen from '../../styles/icnos/up-arrow-green.svg';
 import downArrowGreen from '../../styles/icnos/down-arrow-green.svg';
 
-
 import { MASTER, ADMIN, STUDENT, GENERAL } from '../../constants/Roles';
 
-import {useSelector} from 'react-redux';
-import {useHistory} from 'react-router-dom'
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 const useStyle = makeStyles((theme) => ({
   sideBarcontainer: {
@@ -89,14 +88,14 @@ const Index = ({ content, role }) => {
   const classes = useStyle();
   const [activeItem, setActiveItem] = useState();
   const user = useSelector(({ auth }) => auth.user);
-  const history = useHistory()
+  const history = useHistory();
 
   const handleSelectItem = (item, index) => {
     if (item.type === 'dropDown')
       setActiveItem(
         activeItem === index + item.title ? undefined : index + item.title
       );
-      history.push(item.path)
+    history.push(item.path);
     console.log(item.type);
   };
 
@@ -124,14 +123,11 @@ const Index = ({ content, role }) => {
       };
   };
 
-  const handleuserRole  = (role)=>{
-      if(role === ADMIN)
-          return 'مدیر سیستم'
-      else if(role === MASTER)
-          return 'استاد'
-      else if(role === STUDENT)
-        return 'دانشجو'
-  }
+  const handleuserRole = (role) => {
+    if (role === ADMIN) return 'مدیر سیستم';
+    else if (role === MASTER) return 'استاد';
+    else if (role === STUDENT) return 'دانشجو';
+  };
 
   return (
     <>
@@ -142,7 +138,7 @@ const Index = ({ content, role }) => {
               {handleIcons(role)('profile')}
               <div className='mt-4'>
                 <Typography className={clsx([classes.font])}>
-                  {user.firstname + " " + user.lastname}
+                  {user.firstname + ' ' + user.lastname}
                 </Typography>
               </div>
               <div>
@@ -153,7 +149,7 @@ const Index = ({ content, role }) => {
             </div>
             <List>
               {content.map((item, index) => (
-                <div className=' pt-2 pb-2 pr-3 pl-3'>
+                <div className='pt-2 pb-2 pr-3 pl-3'>
                   <ListItem
                     className={classes.listItemStyle}
                     button
@@ -184,7 +180,9 @@ const Index = ({ content, role }) => {
                             className={classes.subItemStyle}
                             key={childInd}
                             button
-                            onClick={()=>{ history.push('/dashboard'+child.path)}}
+                            onClick={() => {
+                              history.push('/dashboard' + child.path);
+                            }}
                           >
                             <ListItemText
                               className={clsx([classes.subItemText, 'pr-4'])}
