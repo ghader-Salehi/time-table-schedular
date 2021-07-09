@@ -21,3 +21,7 @@ export const createCourse = async(id,data)=>{
 export const getCourseTimeTable = async(id)=>{
     return await axiosObj.get(`${API}/courses/${id}/timetables`)
 }
+
+export const getCourseMasters = async(id)=>{
+    return await axiosObj.get(`${API}/courses/${id}/masters`)
+}

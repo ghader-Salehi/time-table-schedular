@@ -95,7 +95,11 @@ const Index = ({ content, role }) => {
       setActiveItem(
         activeItem === index + item.title ? undefined : index + item.title
       );
-    history.push(item.path);
+      else{
+        // if(item.part === GENERAL)
+          history.push("/dashboard"+item.path);
+      }
+   
     console.log(item.type);
   };
 

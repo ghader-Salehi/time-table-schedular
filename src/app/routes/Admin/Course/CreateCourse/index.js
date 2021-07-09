@@ -57,8 +57,8 @@ function Index() {
     const handleConfirm = ()=>{ 
 
         let obj  = {
-            title:title,
-            unitsCount:parseInt(unitCount)
+            "title":"title",
+            "unitsCount":3
         }
         createCourse(obj)
             .then(res=>{

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { makeStyles, Modal, Fade, Backdrop, Button } from "@material-ui/core";
 import clsx from "clsx";
-import {getCourseTimeTable} from '../../../../../api/Admin/Courses'
+import {getCourseTimeTable,getCourseMasters,deleteCourse} from '../../../../../api/Admin/Courses'
 
 const useStyle = makeStyles((theme) => ({
   font: {
@@ -18,7 +18,7 @@ const useStyle = makeStyles((theme) => ({
     backgroundColor: "white",
     borderRadius: "5px",
     width: "800px",
-    height: "400px",
+    height: "350px",
   },
   DeleteButtonStyle: {
     backgroundColor: "#F95269",
@@ -34,6 +34,7 @@ function Course({ data }) {
   const classes = useStyle();
   const [open, setOpen] = React.useState(false);
   const [courseTimeTables,setCourseTimeTables] = useState([]);
+  const [masters,setMasters] = useState([])
 
   const handleOpen = () => {
     setOpen(true);
@@ -52,13 +53,27 @@ function Course({ data }) {
     //     }).catch(err=>{
 
     //     })
+
+    getCourseMasters(data._id)
+              .then(res=>{
+                console.log(res);
+                setMasters(res.data.data.masters)
+              }).catch(err=>{
+                console.log(err);
+              })
   };
 
   const handleClose = () => {
     setOpen(false);
   };
-  const handleDeleteUser=()=>{
-      
+  const deleteCourse=()=>{
+    console.log('test');
+    deleteCourse(data._id)
+      .then((res)=>{
+        console.log(res)
+      }).catch(err=>{
+
+      })
   }
 
   return (
@@ -117,15 +132,28 @@ function Course({ data }) {
                             اساتید ارائه دهنده :
                     </div>
                     <div className='d-flex'>
-                           <div className='ml-3'>
-                                جعفر
-                           </div>
-                           <div className='ml-3'>
-                               -
-                           </div>
-                           <div className=''>
-                               پاشا
-                           </div>
+
+                      {!masters.length && 
+                      
+                        <div className='ml-3'>
+                                      هیچ استادی این درس را ارائه نداده است
+                          </div>
+                      }
+                      
+                      {masters.map((item,index)=>{
+                        return(
+                          <>
+                              <div className='ml-3'>
+                                  تنها
+                              </div>
+                              <div className='ml-2'>
+                                -
+                              </div>
+                          </>
+                         
+                        )
+                      })}
+                          
                     </div>
 
                 </div>
@@ -168,7 +196,7 @@ function Course({ data }) {
                         }
                 </div>
                 <div classsName='d-flex justify-content-center m-5' >
-                    <Button onClick={handleDeleteUser} style={{width:'80px'}}  className={clsx([classes.font, classes.DeleteButtonStyle, "shadow m-3 mt-5"])} >
+                    <Button onClick={deleteCourse} style={{width:'80px'}}  className={clsx([classes.font, classes.DeleteButtonStyle, "shadow m-3 mt-5"])} >
                             حذف  
                     </Button>
                 </div>

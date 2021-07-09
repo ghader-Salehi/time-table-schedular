@@ -15,6 +15,9 @@ const Auth  = (state = initialState , action)=>{
             }
         case LOG_OUT:
             return { token: null, user: null };
+        
+        case 'UPDATE_LOGGED_USER':
+            return {...state , user:action.payload};
 
         default :
             return state;

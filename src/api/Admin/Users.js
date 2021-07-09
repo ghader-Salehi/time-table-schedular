@@ -26,3 +26,7 @@ export const updateUser = async (id,data) => {
 export const createUser = async (data) => {
   return await axiosObj.post(`${API}/users/add`,data);
 };
+
+export const updateloggedUser = async(data)=>{
+  return await axiosObj.patch(`${API}/users/profile`,data)
+}

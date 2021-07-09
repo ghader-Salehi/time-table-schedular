@@ -65,9 +65,9 @@ const routes = [
   },
   {
     path: '/dashboard/profile',
-    part: 'admin',
+    part: 'general',
     exact: true,
-    component: lazy(() => import('./Admin/Profile')),
+    component: lazy(() => import('./Profile')),
   },
 
   // master

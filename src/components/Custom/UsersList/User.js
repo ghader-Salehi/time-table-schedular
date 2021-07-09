@@ -7,6 +7,10 @@ import {deleteUser} from  '../../../api/Admin/Users'
 import {UserContext} from '../../../context/UserContext'
 import {useHistory} from 'react-router-dom'
 
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+
+import 'sweetalert2/src/sweetalert2.scss'
+
 const useStyle = makeStyles((theme) => ({
   font: {
     fontFamily: "iranYekan",
@@ -83,6 +87,14 @@ function User({ data }) {
     deleteUser(data._id)
       .then((res)=>{
           console.log(res);
+          Swal.fire({
+            title: 'کاربر حذف شد',
+            text: 'کاربر مورد نظر از لیست کاربان حذف شد',
+            icon: 'error',
+            showConfirmButton: false,
+            timer: 2500
+          })
+          setOpen(false)
       }).catch((err)=>{
         console.log(err);
       })

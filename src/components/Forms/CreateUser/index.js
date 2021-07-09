@@ -11,6 +11,10 @@ import clsx from "clsx";
 import { UserContext } from "../../../context/UserContext";
 import RecentAnnouncement from "../../Custom/RecentAnnouncements/RecentAnnouncement";
 import { createUser, updateUser } from "../../../api/Admin/Users";
+import { useHistory } from "react-router";
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+
+import 'sweetalert2/src/sweetalert2.scss'
 
 const useStyle = makeStyles((theme) => ({
   font: {
@@ -51,6 +55,7 @@ const Index = ({ index }) => {
   const [code, setCode] = useState(user ? user.code : "");
   const [pass, setPass] = useState("0");
 
+  const history = useHistory()
   const handleChange = (event) => {
     setState(event.target.checked);
   };
@@ -72,11 +77,19 @@ const Index = ({ index }) => {
       createUser(obj)
         .then((res) => {
           console.log(res);
+          Swal.fire({
+            title: 'کاربر ایجاد شد',
+            text: 'کاربر مورد نظر با موفقیت ایجاد شد',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          history.push('/dashboard/usersList')
         })
         .catch((err) => {
           console.log(err);
         });
-        alert('create user')
+
         console.log(user);
     } else {
       console.log("update");
@@ -86,11 +99,19 @@ const Index = ({ index }) => {
             lastname: lastname,
             code: code,
           };
-          alert('update')
+          
           console.log(obj);
           updateUser(user._id,obj)
             .then((res)=>{
               console.log(res);
+              Swal.fire({
+                title: 'کاربر ویرایش شد',
+                text: 'کاربر مورد نظر با موفقیت ویرایش شد',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500
+              })
+              history.push('/dashboard/usersList')
             }).catch((err)=>{
               console.log(err);
             })
@@ -248,7 +269,7 @@ const Index = ({ index }) => {
             className={clsx([classes.font, classes.AdminButtonStyle, "shadow"])}
             onClick={handleConfirm}
           >
-            {user.user ? <>ویرایش</> : <>تایید</>}
+            تایید
           </Button>
         </div>
       </div>

@@ -48,7 +48,7 @@ function Index() {
                     })}
 
                      <div className='d-flex justify-content-center  m-5'>
-                    <Pagination count='5' shape="rounded" variant="outlined" />
+                    <Pagination count='1' shape="rounded" variant="outlined" />
 
                  </div>
                 </div>

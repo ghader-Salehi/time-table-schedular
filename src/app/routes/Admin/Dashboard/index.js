@@ -35,7 +35,7 @@ const Index = () => {
         <TodayClassesList role={role} content={Todayclasses} />
         <div className="d-flex justify-content-center mb-5 mt-3 pb-5">
           {Todayclasses.length ? (
-            <Pagination count={10} shape="rounded" variant="outlined" />
+            <Pagination count={1} shape="rounded" variant="outlined" />
           ) : null}
         </div>
       </div>

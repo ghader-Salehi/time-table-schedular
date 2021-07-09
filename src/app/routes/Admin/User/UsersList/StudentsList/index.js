@@ -41,7 +41,7 @@ const Index = ({index}) => {
             <UsersList index={index} content={users} />
           </div>
           <div className='d-flex justify-content-center'>
-                    <Pagination count={users.length} shape="rounded" variant="outlined" />
+                    {/* <Pagination count={users.length} shape="rounded" variant="outlined" /> */}
 
             </div>
         </div>

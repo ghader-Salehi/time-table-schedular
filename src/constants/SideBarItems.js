@@ -5,7 +5,7 @@ export const ITEMS = [
     title: 'داشبورد',
     part: 'general',
     type: 'item',
-    path: '/dashboard',
+    path: '',
   },
   // admin
   {
