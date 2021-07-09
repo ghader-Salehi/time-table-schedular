@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import {makeStyles} from '@material-ui/core' 
 import Pagination from "@material-ui/lab/Pagination";
 import clsx from "clsx";
 import Course from './Course'
+import {getListOfCourses}from '../../../../../api/Admin/Courses'
 
 const useStyle = makeStyles((theme) => ({
    
@@ -12,6 +13,17 @@ const useStyle = makeStyles((theme) => ({
 function Index() {
     const classes = useStyle();
     const [courses,setCourese] = useState([1,2,3])
+
+        useEffect(()=>{
+            getListOfCourses()
+                .then((res)=>{ 
+                    console.log(res);
+                    setCourese(res.data.data.courses)
+                }).catch((err)=>{
+                    console.log(err);
+                })
+        },[])
+
     return (
         <div className='d-flex flex-column'>
             <div className='d-flex m-4'>
@@ -30,7 +42,7 @@ function Index() {
                     {courses.map((item,index)=>{
                         return(
                             <>
-                            <Course/>
+                            <Course data={item} key={index} />
                             </>
                         )
                     })}

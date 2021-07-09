@@ -3,7 +3,7 @@ import { lazy } from "react";
 const routes = [
 
     // admin
-    { path:'/dashboard' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/Dashboard')) },
+    { path:'/dashboard' , part:'general' , exact:true , component: lazy(()=>import('./Admin/Dashboard')) },
 
     { path:'/dashboard/usersList' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/User/UsersList')) },
     { path:'/dashboard/createUser' , part:'admin' , exact:true , component: lazy(()=>import('./Admin/User/CreateUser')) },

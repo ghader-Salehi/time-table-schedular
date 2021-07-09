@@ -55,9 +55,7 @@ const Index = ({ index }) => {
     setState(event.target.checked);
   };
 
-  React.useEffect(() => {
-    console.log();
-  }, []);
+
 
   const handleConfirm = () => {
     console.log(user.firstname);

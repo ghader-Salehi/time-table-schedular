@@ -7,6 +7,7 @@ import {
     TextField
   } from "@material-ui/core";
   import clsx from "clsx";
+  import {createAnnouncement} from '../../../api/Admin/Announcements'
 
   const useStyle = makeStyles((theme) => ({
     font: {
@@ -50,10 +51,29 @@ import {
     }
   }));
 
-function Index() {
+function Index({timeTableId}) {
     const classes = useStyle();
     const [title,setTitle] = useState('')
+    const [body,setBody] = useState('')
      
+
+    const handleCreateAnnouncement = ()=>{
+      let obj ={
+        title:title,
+        message:body,
+        timeTable:timeTableId
+      }
+      // createAnnouncement(obj)
+      //   .then((res)=>{
+
+      //   }).catch(err=>{
+
+      //   })
+
+
+    }
+
+
     return (
         <>
             <div className='d-flex'>
@@ -90,15 +110,15 @@ function Index() {
                     label="عنوان اطلاعیه را وارد کنید "
                     multiline
                     rows={2}
-                    // value={value}
-                    // onChange={handleChange}
+                    value={body}
+                    onChange={(e)=>{setBody(e.target.value)}}
                     variant="outlined"
                     />
             </div>
             <div className='d-flex justify-content-center m-4'>
                     <Button
                     className={clsx([classes.font, classes.AdminButtonStyle, "shadow"])}
-                  
+                     onClick={handleCreateAnnouncement}
                 >
                     ایجاد اطلاعیه
                 </Button>

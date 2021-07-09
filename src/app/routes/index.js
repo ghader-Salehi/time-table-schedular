@@ -38,13 +38,20 @@ const Index = () => {
             <Header />
             <div className="container">
               <Switch>
-                {routes.map((item, index) => (
-                  <Route
-                    path={item.path}
-                    exact={item.exact}
-                    component={item.component}
-                  />
-                ))}
+
+
+                {
+                  routes.filter((item) => item.part === role || item.part === GENERAL).map((item,index)=>{
+                        return(
+                          <Route
+                              path={item.path}
+                              exact={item.exact}
+                              component={item.component}
+                          />
+                        )
+                  })
+
+                }
               </Switch>
             </div>
           </div>
