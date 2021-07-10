@@ -1,4 +1,4 @@
-import React,{useStae, useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import {
     makeStyles,
     FormControl,
@@ -8,9 +8,13 @@ import {
     Button,
   } from "@material-ui/core";
   import clsx from "clsx";
-  import {createCourse} from '../../../../../api/Admin/Courses'
-  import { useHistory } from 'react-router';
+  import {changePassword} from '../../../api/Admin/Users'
 
+  import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
+import {useHistory} from 'react-router-dom'
+
+ 
   const useStyle = makeStyles((theme) => ({
     font: {
       fontFamily: "iranYekan",
@@ -48,42 +52,50 @@ import {
       },
   }));
 
+
 function Index() {
     const classes = useStyle();
-    const [title,setTitle] = useState('')
-    const [unitCount,SetUnitCount] = useState()
-    const history = useHistory()
+    const [currentPass,setCurrentPass]  = useState()
+    const [newPass,setNewPass] = useState()
+    const history  = useHistory()
 
-    const handleConfirm = ()=>{ 
+    
+  const handleConfirm =()=>{
+    let obj = {
+        currentPassword : currentPass,
+        newPassword : newPass
+    }
+    changePassword(obj)
+        .then(res=>{
 
-        let obj  = {
-            title:"title",
-            unitsCount:3
-        }
-        createCourse(obj)
-            .then(res=>{
-                console.log(res);
-                // history.push('/dashboard/coursesList')
-            }).catch(err=>{
-                console.log(err);
-            })
-    }   
+            Swal.fire({
+                title: 'رمز عبور تغییر داده شد',
+                text: 'رمز عبور شما با موفقیت تغییر داده شد',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500
+              })
+              history.push('/dashboard')
+
+        }).catch(err=>{
+
+        })
+  }
+
+
     return (
         <>
-        <div className='d-flex flex-column  '>
-            <div className='d-flex m-4'>
-                    ایجاد دوره ی آموزشی
-            </div>
-                <div className='d-flex'>
-                        <div  className={clsx(["d-flex justify-content-center", classes.fullwidth])}>
-                                    <FormControl  className={clsx(["col-6 m-3 ml-5",classes.fullwidth])} >
+            <div className='d-flex  justify-content-center m-5'>
+                <div className='d-flex flex-column col-5'>
+                    <div>
+                    <FormControl  className={clsx(["col-12 m-3 ml-5",classes.fullwidth])} >
                                 <div
                                 className={clsx([
                                     "d-flex flex-column align-items-start",
                                     classes.fullwidth,
                                 ])}
                                 >
-                                <label> نام </label>
+                                <label> رمز عبور فعلی </label>
                                 <OutlinedInput
                                     className={clsx([
                                     "",
@@ -91,53 +103,50 @@ function Index() {
                                     classes.Input,
                                     classes.fullwidth,
                                     ])}
-                                    placeholder="نام دوره ی آموزشی را وارد کنید"
-                                    value={title}
+                                    placeholder="رمز عبور فعلی را وارد کنید"
+                                    value={currentPass}
                                     onChange={(e) => {
-                                        setTitle(e.target.value);
+                                        setCurrentPass(e.target.value);
                                     }}
                                 />
                                 </div>
                             </FormControl>
-                        </div>
-                        <div  className={clsx(["d-flex ", classes.fullwidth])}>
-                                    <FormControl className="col-5 m-3 ml-5">
-                                <div
-                                className={clsx([
-                                    "d-flex flex-column align-items-start",
-                                    //   classes.fullwidth,
-                                ])}
-                                >
-                                <label> واحد </label>
-                                <OutlinedInput
-                                type='number'
-                                    className={clsx([
-                                    "",
-                                    classes.font,
-                                    classes.Input,
-                                    classes.fullwidth,
-                                    ])}
-                                    placeholder="تعداد واحد درس مربوطه را وارد کنید"
-                                    value={unitCount}
-                                    onChange={(e) => {
-                                        SetUnitCount(e.target.value);
-                                    }}
-                                />
-                                </div>
-                            </FormControl>
-                        </div>
                     </div>
-                    <div className='d-flex justify-content-center mt-5'>
+                    <div className='mt-3'>
+                    <FormControl  className={clsx(["col-12 m-3  ml-5",classes.fullwidth])} >
+                                <div
+                                className={clsx([
+                                    "d-flex flex-column align-items-start",
+                                    classes.fullwidth,
+                                ])}
+                                >
+                                <label> رمز جدید </label>
+                                <OutlinedInput
+                                    className={clsx([
+                                    "",
+                                    classes.font,
+                                    classes.Input,
+                                    classes.fullwidth,
+                                    ])}
+                                    placeholder="رمز عبور جدید را وارد کنید"
+                                    value={newPass}
+                                    onChange={(e) => {
+                                        setNewPass(e.target.value);
+                                    }}
+                                />
+                                </div>
+                            </FormControl>
+                    </div>
+                    <div className='d-flex justify-content-center'>
                             <Button
                                     className={clsx([classes.font, classes.AdminButtonStyle, "shadow mt-5"])}
                                     onClick={handleConfirm}
                                 >
-                                تایید
+                                تغییر
                                 </Button>
                     </div>
-        </div>
-            
-       
+                </div>
+            </div>
         </>
     )
 }

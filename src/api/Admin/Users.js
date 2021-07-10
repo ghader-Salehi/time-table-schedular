@@ -30,3 +30,7 @@ export const createUser = async (data) => {
 export const updateloggedUser = async(data)=>{
   return await axiosObj.patch(`${API}/users/profile`,data)
 }
+
+export const changePassword = async(data)=>{
+   return await axiosObj.patch(`${API}/users/changepassword`,data)
+}

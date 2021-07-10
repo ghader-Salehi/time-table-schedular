@@ -35,6 +35,9 @@ const Header = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleChnagePass = ()=>{
+    history.push('/dashboard/changePassword')
+  }
 
   const handleLogout = () => {
     dispatch(LogoutAction());
@@ -78,7 +81,7 @@ const Header = () => {
           >
             <MenuItem
               className={clsx([classes.font, 'text-center'])}
-              onClick={handleClose}
+              onClick={handleChnagePass}
             >
               تغییر رمز عبور
             </MenuItem>

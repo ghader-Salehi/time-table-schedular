@@ -44,7 +44,7 @@ const Index=({index,modalFunction})=> {
                 </div>
             </div>
             <div className='d-flex justify-content-center'>
-                    <Pagination count={1} shape="rounded" variant="outlined" />
+                    {/* <Pagination count={1} shape="rounded" variant="outlined" /> */}
 
             </div>
         </>

@@ -17,6 +17,7 @@ const Auth  = (state = initialState , action)=>{
             return { token: null, user: null };
         
         case 'UPDATE_LOGGED_USER':
+            console.log({...state , user:action.payload});
             return {...state , user:action.payload};
 
         default :

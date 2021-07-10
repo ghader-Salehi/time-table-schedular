@@ -83,8 +83,11 @@ function DaysCheckBox() {
                     setDays(res.data.data.days);
 
                     res.data.data.days.forEach((item,index)=>{
-                        idArray[index] = item._id
+                      
+                          idArray[item.dayOfWeek] = item._id
                     })
+
+                    console.log( res.data.data.days);
 
 
                         setSaturday(handleStatusOfCheckbox(0,res.data.data.days))
@@ -113,6 +116,7 @@ function DaysCheckBox() {
             .then(res=>{
                 console.log(res);
                 idArray[index] = res.data.data.days._id
+                console.log(idArray);
             }).catch(err=>{
                 console.log(err);
             })

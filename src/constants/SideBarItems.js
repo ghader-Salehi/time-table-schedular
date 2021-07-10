@@ -74,7 +74,7 @@ export const ITEMS = [
     children: [
       {
         title: 'جدول زمانی',
-        path: '',
+        path: '/masterTimeTable',
       },
       {
         title: 'روزهای کاری',
@@ -89,11 +89,11 @@ export const ITEMS = [
     children: [
       {
         title: 'لیست  اطلاعیه ها',
-        path: '',
+        path: '/masterAnnouncementlist',
       },
       {
         title: 'ایجاد اطلاعیه ',
-        path: '',
+        path: '/masterCreateAnnouncement',
       },
     ],
   },
@@ -104,11 +104,11 @@ export const ITEMS = [
     children: [
       {
         title: 'لیست  دوره ها',
-        path: '',
+        path: '/masterCourseList',
       },
       {
         title: 'واحد های انتخابی ',
-        path: '',
+        path: '/masterChoosedCourses',
       },
     ],
   },
@@ -118,7 +118,7 @@ export const ITEMS = [
     title: 'برنامه هفتگی',
     part: 'student',
     type: 'item',
-    path: '',
+    path: '/studentTimeTable',
   },
   {
     title: ' دوره ها',
@@ -127,11 +127,11 @@ export const ITEMS = [
     children: [
       {
         title: 'دروس ارائه شده',
-        path: '',
+        path: '/presentedCourses',
       },
       {
         title: 'واحد های انتخابی ',
-        path: '',
+        path: '/studentChoosedCourses',
       },
     ],
   },
@@ -139,7 +139,7 @@ export const ITEMS = [
     title: 'اطلاعیه ها',
     part: 'student',
     type: 'item',
-    path: '',
+    path: '/studentAnnouncements',
   },
 
   ,

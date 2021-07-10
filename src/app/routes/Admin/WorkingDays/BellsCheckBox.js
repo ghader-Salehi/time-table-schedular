@@ -94,7 +94,7 @@ React.useEffect(()=>{
               // setDays(res.data.data.bells);
 
               res.data.data.bells.forEach((item,index)=>{
-                  idArray[index] = item._id
+                  idArray[item.bellOfDay] = item._id
               })
 
               console.log(handleStatusOfCheckbox(0,res.data.data.bells));

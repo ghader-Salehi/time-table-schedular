@@ -91,6 +91,8 @@ function Index() {
         code : code,
 
     }
+
+    console.log(obj);
     
     updateloggedUser(obj)
           .then(res=>{
