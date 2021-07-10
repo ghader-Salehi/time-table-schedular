@@ -12,3 +12,8 @@ export const getAnnouncementsList = async()=>{
 export const createAnnouncement = async(data)=>{
     return await axiosObj.post(`${API}/announcements`,data)
 }
+export const deleteAnnouncement = async(id)=>{
+    return await axiosObj.delete(`${API}/announcements/${id}`)
+}
+
+

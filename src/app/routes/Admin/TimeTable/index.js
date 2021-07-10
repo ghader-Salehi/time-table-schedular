@@ -3,6 +3,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import { makeStyles, Typography } from "@material-ui/core";
 import clsx from "clsx";
 import TimeTable from  './TimeTable'
+import {getTimeTablesList} from '../../../../api/Admin/TImeTable'
 
 const useStyle = makeStyles(() => ({
   font: {
@@ -22,20 +23,30 @@ const useStyle = makeStyles(() => ({
 
 function Index() {
   const classes = useStyle();
-  const [timeTable, setTimeTable] = React.useState([1,2,3,1,1,1,1,1]);
+  const [timeTable, setTimeTable] = React.useState([]);
+
+  React.useEffect(()=>{
+    getTimeTablesList()
+          .then(res=>{
+                console.log(res);
+                setTimeTable(res.data.data.timetables);
+          }).catch(err=>{
+                console.log(err)
+          })
+  },[])
   return (
     <>
       <div
         className={clsx([" d-flex mt-4  p-3 mr-3 ml-5 ", classes.container])}
       >
         <div className="col-3 d-flex justify-content-center">درس مربوطه</div>
-        <div className="col-3 d-flex justify-content-center">استاد مربوطه</div>
+        <div className="col-2 d-flex justify-content-center">استاد مربوطه</div>
 
-        <div className="col-3 d-flex justify-content-center">
+        <div className="col-5 d-flex justify-content-center">
           تایم برگزاری کلاس ها
         </div>
 
-        <div className="col-3 d-flex justify-content-center">
+        <div className="col-2 d-flex justify-content-center">
           تعداد دانشجویان
         </div>
       </div>

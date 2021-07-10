@@ -24,6 +24,16 @@ function Index() {
                 })
         },[])
 
+        const handleUpdateList = ()=>{
+            getListOfCourses()
+            .then((res)=>{ 
+                console.log(res);
+                setCourese(res.data.data.courses)
+            }).catch((err)=>{
+                console.log(err);
+            })
+        }
+
     return (
         <div className='d-flex flex-column'>
             <div className='d-flex m-4'>
@@ -42,7 +52,7 @@ function Index() {
                     {courses.map((item,index)=>{
                         return(
                             <>
-                            <Course data={item} key={index} />
+                            <Course updateList={handleUpdateList} data={item} key={index} />
                             </>
                         )
                     })}

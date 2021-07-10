@@ -9,3 +9,7 @@ axiosObj.defaults.headers["Authorization"] = `${token}`;
 export const getTimeTablesList = async()=>{
     return await axiosObj.get(`${API}/timetables`)
 }
+
+export const getTimeTableById = async(id)=>{
+    return await axiosObj.get(`${API}/timetables/${id}`)
+}

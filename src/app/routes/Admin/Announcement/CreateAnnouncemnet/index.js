@@ -42,11 +42,17 @@ function Index() {
     const [course, setCourse] = React.useState(0);
     const [open, setOpen] = React.useState(false);
     const [showForm,setShowForm] = useState(false);
-    const [timeTables,setTimeTables] = React.useState([1,2,2])
+    const [timeTables,setTimeTables] = React.useState([])
+
+    const [selcetedTimeTableId,setSelectedTimeTableId] = useState();
+
+    const [message,setMessage] = useState();
 
   const handleChange = (event) => {
     setCourse(event.target.value);
     setShowForm(true);
+    console.log(timeTables[event.target.value-1]._id);
+    setSelectedTimeTableId(timeTables[event.target.value-1]._id)
   };
 
   const handleClose = () => {
@@ -62,7 +68,7 @@ function Index() {
     getTimeTablesList()
       .then((res)=>{
         console.log(res)
-        // setTimeTables(res.data.data.timetables)
+        setTimeTables(res.data.data.timetables)
       }).catch((err)=>{
         console.log(err)
       })
@@ -93,14 +99,17 @@ function Index() {
                             >
                              
                             <MenuItem disabled className={classes.font} selected={true} value={0}>یکی از  دروس  موجود را انتخاب کنید</MenuItem>
-                            {/* <MenuItem className={classes.font} value={2}>طرحی الگویتم - جعفر تنها  - شنبه 10-12 - سه شنبه  16-18</MenuItem>
-                            <MenuItem className={classes.font} value={3}>طرحی الگویتم - جعفر تنها  - شنبه 10-12 - سه شنبه  16-18</MenuItem>
-                            <MenuItem className={classes.font} value={4}>طرحی الگویتم - جعفر تنها  - شنبه 10-12 - سه شنبه  16-18</MenuItem>
-                            <MenuItem className={classes.font} value={5}>طرحی الگویتم - جعفر تنها  - شنبه 10-12 - سه شنبه  16-18</MenuItem> */}
+                        
                             {timeTables.map((item,index)=>{
                               return (
                                
-                                    <MenuItem key={index} className={classes.font} value={index+1}>طرحی الگویتم - جعفر تنها  - شنبه 10-12 - سه شنبه  16-18</MenuItem>
+                                    <MenuItem key={index} className={classes.font} value={index+1}>
+                                      
+                                      {`${item.course.title} - ${item.master.lastname}` } 
+
+                                      
+                                      
+                                      </MenuItem>
                                
                               )
                             })}
@@ -108,7 +117,7 @@ function Index() {
             </FormControl>
         </div>
         <div>
-          {showForm &&   <CreateAnnouncement timeTableId=''/>}
+          {showForm &&   <CreateAnnouncement timeTableId={selcetedTimeTableId}/>}
           
 
         </div>
