@@ -10,6 +10,9 @@ import {
   import clsx from "clsx";
   import {createCourse} from '../../../../../api/Admin/Courses'
   import { useHistory } from 'react-router';
+  import Swal from 'sweetalert2/dist/sweetalert2.js'
+
+import 'sweetalert2/src/sweetalert2.scss'
 
   const useStyle = makeStyles((theme) => ({
     font: {
@@ -57,13 +60,20 @@ function Index() {
     const handleConfirm = ()=>{ 
 
         let obj  = {
-            title:"title",
-            unitsCount:3
+            title:title,
+            unitsCount:unitCount
         }
         createCourse(obj)
             .then(res=>{
                 console.log(res);
-                // history.push('/dashboard/coursesList')
+                Swal.fire({
+                  title: 'دوره ایجاد شد',
+                  text: 'دوره مورد نظر به لیست دوره ها اضافه شد',
+                  icon: 'success',
+                  showConfirmButton: false,
+                  timer: 2500
+                })
+                history.push('/dashboard/coursesList')
             }).catch(err=>{
                 console.log(err);
             })

@@ -3,6 +3,11 @@ import { makeStyles, Modal, Fade, Backdrop, Button } from "@material-ui/core";
 import clsx from "clsx";
 import {getCourseTimeTable,getCourseMasters,deleteCourse} from '../../../../../api/Admin/Courses'
 
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+
+import 'sweetalert2/src/sweetalert2.scss'
+
+
 const useStyle = makeStyles((theme) => ({
   font: {
     fontFamily: "iranYekan",
@@ -70,10 +75,21 @@ function Course({ data }) {
     console.log('test');
     deleteCourse(data._id)
       .then((res)=>{
+        setOpen(false);
+        Swal.fire({
+                title: 'دوره حذف شد',
+                text: 'دوره مورد نظر از لیست دوره ها حذف شد',
+                icon: 'error',
+                showConfirmButton: false,
+                timer: 2500
+              })
+       
+
         console.log(res)
       }).catch(err=>{
 
       })
+   
   }
 
   return (
@@ -196,7 +212,9 @@ function Course({ data }) {
                         }
                 </div>
                 <div classsName='d-flex justify-content-center m-5' >
-                    <Button onClick={deleteCourse} style={{width:'80px'}}  className={clsx([classes.font, classes.DeleteButtonStyle, "shadow m-3 mt-5"])} >
+                    <Button 
+                    onClick={()=>deleteCourse()} 
+                    style={{width:'80px'}}  className={clsx([classes.font, classes.DeleteButtonStyle, "shadow m-3 mt-5"])} >
                             حذف  
                     </Button>
                 </div>
