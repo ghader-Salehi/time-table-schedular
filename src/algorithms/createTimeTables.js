@@ -1,63 +1,110 @@
-exports.createTimeTables = (courses, timeTableBells, masters) => {
+const mongoose = require('mongoose');
+
+let timeTables = [];
+
+const createTimeTables = (courses, timeTableBells, masters) => {
   masters.forEach((master) => {
-    master.courses.forEach((course) => {
-      if (isValidCourse(course))
-        selectTimeTable(course, timeTableBells, master);
+    master.courses.forEach((masterSelectedCourse) => {
+      if (isValidCourse(masterSelectedCourse, courses)) {
+        selectTimeTable(masterSelectedCourse, timeTableBells, master, courses);
+      }
     });
   });
+
+  return timeTables;
 };
 
 isValidCourse = (course, courses) => {
-  courses.forEach((curCourse) => {
-    if (
-      curCourse.title === course.title &&
-      curCourse.unitsCount === course.unitsCount
-    )
-      return true;
-  });
-  return false;
+  let result = false;
+  for (const curCourse of courses) {
+    if (course.id == curCourse.id) {
+      result = true;
+      break;
+    }
+  }
+  return result;
 }; //end isValidCourse
 
-selectTimeTable = (course, timeTableBells, master) => {
-  let timeTables = [];
+selectTimeTable = (course, timeTableBells, master, courses) => {
+  if (!master.hasOwnProperty('timeTables')) master.timeTables = [];
   for (let i = 0; i < course.unitsCount; i++) {
     let selectTimeTable = false;
-    master.timeTableBells.forEach(masterTimeTableBell => {
-      if(masterTimeTableBell.selected) // take a look at this
+    for (let j = 0; j < master.timeTableBells.length; j++) {
+      const masterTimeTableBell = master.timeTableBells[j];
+      if (
+        masterTimeTableBell.hasOwnProperty('selected') &&
+        masterTimeTableBell.selected
+      )
         continue;
-      
-      timeTableBells.forEach(timeTableBell => {
-        if(masterTimeTableBell.day.id === timeTableBell.day.id && masterTimeTableBell.bell.id === timeTableBell.bell.id) {
-          let timeTable = {
-            course: course.id,
-            master: master.id
-          }
-          if(!isDuplicateClassInDay(master.timeTables, masterTimeTableBell, course)) {
-            if(master.timeTables.length > 0) {
-              // در صورتی اجرا میشود که درس تکراری در روز تدریس نشود
-              timeTable.timeTableBell = timeTableBell;
-              masterTimeTableBell.selected = true;
-              timeTables.push(timeTable);
-              master.timeTables.push(timeTable);
-              selectTimeTable = true;
-              break;
-            }
-            else {
-              // remained from this line
-            }
-          }//end if(!isDuplicateClassInDay)
-        }
-      })
-    })
-  }
-};
 
+      for (const timeTableBell of timeTableBells) {
+        if (masterTimeTableBell.id == timeTableBell.id) {
+          let timeTable = {
+            course: course,
+            master: master,
+            timeTableBells: [],
+          };
+
+          if (
+            !isDuplicateClassInDay(
+              master.timeTables, // master all timeTables
+              masterTimeTableBell, // we want to set a class for this
+              course,
+              courses
+            )
+          ) {
+            // در صورتی اجرا میشود که درس تکراری در روز تدریس نشود
+            timeTable.timeTableBells.push(timeTableBell);
+            masterTimeTableBell.selected = true;
+            const newID = mongoose.Types.ObjectId();
+            timeTable._id = newID;
+            timeTables.push(timeTable);
+            master.timeTables.push(timeTable._id); // later get ID from database and push to master's timeTables
+            selectTimeTable = true;
+            break;
+          } //end if(!isDuplicateClassInDay)
+        }
+      }
+      if (selectTimeTable == true) break;
+    } //end forEach timeTableBells
+  } //end for i from zero to unitsCount
+};
 
 // بررسی اینکه در یک روز یک استاد نتواند یک درس را بیش از یک بار تدریس کند
 isDuplicateClassInDay = (masterTimeTables, currentTimeTableBell, course) => {
-  masterTimeTables.forEach(timeTable => {
-    if(timeTable.course.title === course.title && timeTable.timeTableBell.day.dayOfWeek === currentTimeTableBell.day.dayOfWeek)
-      return true;
-  })
-  return false;
-}
+  let result = false;
+  if (masterTimeTables.length == 0) return result;
+  masterTimeTables.forEach((timeTable) => {
+    const poppedTimeTable = findTimeTableByID(timeTable._id);
+    if (!poppedTimeTable) return false;
+    console.log('poppedTimeTable', poppedTimeTable);
+    if (
+      poppedTimeTable.course._id == course._id &&
+      timeTableTimeTableBellsHaveSameDay(
+        poppedTimeTable.timeTableBells,
+        currentTimeTableBell
+      )
+    )
+      result = true;
+  });
+  return result;
+};
+
+timeTableTimeTableBellsHaveSameDay = (timeTableBells, bell) => {
+  let result = false;
+  timeTableBells.forEach((timeTableBell) => {
+    if (timeTableBell.day.dayOfWeek == bell.day.dayOfWeek) result = true;
+  });
+  return result;
+};
+
+findTimeTableByID = (id) => {
+  for (const timeTable of timeTables) {
+    if (timeTable._id == id) {
+      return timeTable;
+    }
+  }
+  return null;
+};
+
+module.exports = createTimeTables;

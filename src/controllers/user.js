@@ -3,9 +3,24 @@ const AppError = require('../utils/AppError');
 const catchAsync = require('./../utils/catchAsync');
 const factory = require('./handleFactory');
 
+const userPopulation = [
+  {
+    path: 'courses',
+    model: 'course',
+  },
+  {
+    path: 'timeTableBells',
+    model: 'timeTableBell',
+    populate: [
+      { path: 'day', model: 'day' },
+      { path: 'bell', model: 'bell' },
+    ],
+  },
+];
+
 exports.createNewUser = factory.createNewDocument(User);
 exports.getAllUsers = factory.getListOfDocuments(User);
-exports.getUserByID = factory.getOneByID(User);
+exports.getUserByID = factory.getOneByID(User, userPopulation);
 exports.deleteUserByID = factory.deleteOneByID(User);
 exports.updateUserProfileWithParamID = factory.updateOneByID(User, {
   new: true,
@@ -76,3 +91,18 @@ exports.getUserProfile = (req, res, next) => {
     },
   });
 };
+
+exports.getMasterCourses = catchAsync(async (req, res, next) => {
+  const curUser = await User.findById(req.params.id).populate('courses');
+  if (curUser.rule != 'master')
+    return next(new AppError('only master can have courses', 400))
+  const courses = curUser.courses;
+  res.status(200).json({
+    status: 'Courses found',
+    success: true,
+    message: `Courses for master with ID ${req.user.id} found`,
+    data: {
+      courses
+    }
+  })
+})

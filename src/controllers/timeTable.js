@@ -76,8 +76,24 @@ exports.startProcess = catchAsync(async (req, res, next) => {
     .populate(mastersPopulation)
     .select('-timeTables');
   const createTimeTables = require('../algorithms/createTimeTables');
+  console.log('starting process\n');
+  let timeTables = createTimeTables(courses, timeTableBells, masters);
+  timeTables = timeTables.map((timeTable) => {
+    timeTable.master.timeTableBells = undefined;
+    return timeTable;
+  });
 
-  res.send('operation done');
+  res.status(200).json({
+    status: 'success',
+    success: true,
+    message: 'some data returned',
+    data: {
+      timeTables,
+      courses,
+      timeTableBells,
+      masters,
+    },
+  });
 });
 
 const userTimeTablePopulation = {

@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema({
       ref: 'timeTableBell',
       validate: {
         validator: function () {
-          return this.rule === 'master';
+          return this.rule != 'master';
         },
         message: "Validation Error: Student can't have timeTableBells",
       },
@@ -53,7 +53,7 @@ const userSchema = new mongoose.Schema({
       ref: 'course',
       validate: {
         validator: function () {
-          return this.rule === 'master';
+          return this.rule != 'master';
         },
         message: "Validation Error: Student can't choose courses",
       },
