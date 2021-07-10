@@ -10,16 +10,16 @@ import {getTimeTablesList} from '../../../../../api/Admin/TImeTable'
 function Index() {
 
     // const classes = useStyle();
-    const [courses,setCourese] = useState([1,2,1])
+    const [courses,setCourese] = useState([])
 
     React.useEffect(()=>{
-        // getTimeTablesList()
-        //     .then((res)=>{
-        //             console.log(res);
-        //             setCourese(res.data.data.timetables)
-        //     }).catch((err)=>{
-        //         console.log(err);
-        //     })
+        getTimeTablesList()
+            .then((res)=>{
+                    console.log(res);
+                    setCourese(res.data.data.timetables)
+            }).catch((err)=>{
+                console.log(err);
+            })
 
     },[])
 
