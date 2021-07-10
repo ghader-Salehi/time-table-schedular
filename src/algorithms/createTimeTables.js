@@ -11,7 +11,31 @@ const createTimeTables = (courses, timeTableBells, masters) => {
     });
   });
 
-  return timeTables;
+  let finalTimeTables = [];
+  console.log('we have', timeTables.length, 'timeTables');
+  for (let i = timeTables.length - 1; i > 0; i--) {
+    let curTimeTable = {
+      course: timeTables[i].course.id,
+      master: timeTables[i].master.id,
+      timeTableBells: [timeTables[i].timeTableBells[0].id]
+    }
+    timeTables.splice(i, 1);
+
+
+    for (let j = i - 1; j >= 0; j--) {
+      if (curTimeTable.course == timeTables[j].course.id && curTimeTable.master == timeTables[j].master.id) {
+        curTimeTable.timeTableBells.push(timeTables[j].timeTableBells[0].id)
+        timeTables.splice(j, 1);
+        i--;
+      }
+    }
+    finalTimeTables.push(curTimeTable);
+  }//end for
+  if (timeTables.length > 0) {
+    console.log('some items remained in timetables');
+  }
+
+  return finalTimeTables;
 };
 
 isValidCourse = (course, courses) => {
@@ -77,7 +101,6 @@ isDuplicateClassInDay = (masterTimeTables, currentTimeTableBell, course) => {
   masterTimeTables.forEach((timeTable) => {
     const poppedTimeTable = findTimeTableByID(timeTable._id);
     if (!poppedTimeTable) return false;
-    console.log('poppedTimeTable', poppedTimeTable);
     if (
       poppedTimeTable.course._id == course._id &&
       timeTableTimeTableBellsHaveSameDay(

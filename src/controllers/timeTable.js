@@ -77,21 +77,18 @@ exports.startProcess = catchAsync(async (req, res, next) => {
     .select('-timeTables');
   const createTimeTables = require('../algorithms/createTimeTables');
   console.log('starting process\n');
-  let timeTables = createTimeTables(courses, timeTableBells, masters);
-  timeTables = timeTables.map((timeTable) => {
-    timeTable.master.timeTableBells = undefined;
-    return timeTable;
-  });
+  let outputedTimeTables = createTimeTables(courses, timeTableBells, masters);
+
+  // delete old time tables and save new ones
+  await TimeTable.deleteMany();
+  const timeTables = await TimeTable.insertMany(outputedTimeTables);
 
   res.status(200).json({
     status: 'success',
     success: true,
-    message: 'some data returned',
+    message: 'New TimeTable set to database. Old ones removed happy new Term',
     data: {
       timeTables,
-      courses,
-      timeTableBells,
-      masters,
     },
   });
 });
@@ -131,7 +128,7 @@ exports.getTodayClasses = catchAsync(async (req, res, next) => {
     req.user.rule === 'admin'
       ? await TimeTable.find().populate(timeTablePopulation)
       : (await User.findById(req.user.id).populate(userTimeTablePopulation))
-          .timeTables;
+        .timeTables;
   let dayIndex = new Date().getDay();
   dayIndex = dayIndex == 6 ? 0 : dayIndex + 1;
   timeTables = timeTables.filter((timeTable) => {

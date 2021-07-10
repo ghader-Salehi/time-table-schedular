@@ -1,13 +1,15 @@
 const mongoose = require('mongoose');
+const User = require('./user');
 
 const timeTableSchema = mongoose.Schema({
   master: {
     type: mongoose.Schema.ObjectId,
     ref: 'user',
-    required: [true, 'Provide course for time table'],
+    required: [true, 'Provide master user for time table'],
     validate: {
-      validator: function (el) {
-        return el.rule === 'master';
+      validator: async function (el) {
+        const user = await User.findById(el);
+        return user.rule == 'master';
       },
       message: 'User provided for this time table should be master',
     },

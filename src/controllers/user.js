@@ -44,10 +44,10 @@ exports.updateUserProfile = catchAsync(async (req, res, next) => {
   // logged in user updates his profile
   if (req.body.password)
     return next(new AppError("Can't update password using this endpoint", 400));
-  const user = await User.findByIdAndUpdate(req.user.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  let user = req.user;
+  for (const prop in req.body)
+    user[prop] = req.body[prop]
+  await user.save();
   if (!user) return next(new AppError('Something went wrong', 404));
   res.status(200).json({
     status: 'success',
