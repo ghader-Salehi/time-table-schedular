@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles } from "@material-ui/core";
 import clsx from "clsx";
+import {getTimeTableById} from '../../../../../api/Admin/TImeTable'
 
 const useStyle = makeStyles(() => ({
   font: {
@@ -13,8 +14,21 @@ const useStyle = makeStyles(() => ({
   },
 }));
 
-function Announcement({data}) {
+function Announcement({data,title}) {
     const classes = useStyle();
+    const [courseName,setCourseName] = useState('')
+
+    useEffect(()=>{
+      console.log(data);
+      getTimeTableById(data.timeTable)
+      .then(res=>{
+         console.log(res);
+         setCourseName(res.data.data.timetables.course.title)
+      })
+
+    },[])
+
+    // timetables
     return (
         <>
             <div
@@ -23,13 +37,13 @@ function Announcement({data}) {
                     classes.container,
                     ])}
                 >
-                    <div className="col-3 d-flex justify-content-center">درس</div>
-                    <div className="col-3 d-flex justify-content-center">زمان برگزاری</div>
+                    <div className="col-6 d-flex justify-content-center">{data.message}</div>
+                   
                 
-                    <div className="col-3 d-flex justify-content-center">استاد</div>
+                    <div className="col-2 d-flex justify-content-center">{courseName}</div>
                     
 
-                    <div className="col-3 d-flex justify-content-center">محل برگزاری</div>
+                   
                 </div>
         </>
     )

@@ -78,7 +78,7 @@ function Index({timeTableId}) {
               showConfirmButton: false,
               timer: 1500
             })
-            history.push('/dashboard/announcementsList')
+            // history.push('/dashboard/announcementsList')
         }).catch(err=>{
 
         })

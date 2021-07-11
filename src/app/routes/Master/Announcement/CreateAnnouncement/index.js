@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import {
   makeStyles,
   Typography,
@@ -8,8 +8,10 @@ import {
   MenuItem,
 } from "@material-ui/core";
 import CreateAnnouncement from '../../../../../components/Forms/CreateAnnouncement'
-
+import  {getTimeTablesList} from '../../../../../api/Admin/TImeTable'
 import clsx from "clsx";
+import { useSelector} from "react-redux";
+
 
 const useStyles = makeStyles((theme) => ({
   font: {
@@ -38,11 +40,22 @@ function Index() {
   const [course, setCourse] = React.useState(0);
   const [open, setOpen] = React.useState(false);
   const [showForm, setShowForm] = React.useState(false);
-  const [timeTables, setTimeTables] = React.useState([1, 2, 2]);
+  const [timeTables, setTimeTables] = React.useState([]);
+  const [selcetedTimeTableId,setSelectedTimeTableId] = useState();
+
+  const id = useSelector(({ auth }) => auth.user._id);
+  
+
+  const filterTimeTable = (array)=>{
+       return array.filter((item)=>item.master._id === id)
+  }
+
 
   const handleChange = (event) => {
     setCourse(event.target.value);
     setShowForm(true);
+    setSelectedTimeTableId(timeTables[event.target.value-1]._id)
+    console.log(timeTables[event.target.value-1]._id);
   };
 
   const handleClose = () => {
@@ -52,6 +65,19 @@ function Index() {
   const handleOpen = () => {
     setOpen(true);
   };
+
+  React.useEffect(()=>{
+    getTimeTablesList()
+          .then(res=>{
+              console.log(filterTimeTable(res.data.data.timetables));
+              setTimeTables(filterTimeTable(res.data.data.timetables))
+              console.log(res);
+              console.log(id)
+  
+          }).catch(err=>{
+            console.log(err);
+          })
+  },[])
 
   return (
     <>
@@ -92,14 +118,14 @@ function Index() {
                   className={classes.font}
                   value={index + 1}
                 >
-                  طرحی الگویتم - جعفر تنها - شنبه 10-12 - سه شنبه 16-18
+                  {`${item.course.title} - ${item.master.lastname}` } 
                 </MenuItem>
               );
             })}
           </Select>
         </FormControl>
       </div>
-      <div>{showForm && <CreateAnnouncement timeTableId="" />}</div>
+      <div>{showForm && <CreateAnnouncement timeTableId={selcetedTimeTableId} />}</div>
     </>
   );
 }

@@ -13,8 +13,12 @@ const useStyle = makeStyles(() => ({
     },
   }));
 
-function TimeTable() {
+function TimeTable({data}) {
     const classes = useStyle();
+
+    React.useEffect(()=>{
+        console.log(data)
+    },[])
     return (
         <>
             <div
@@ -23,12 +27,28 @@ function TimeTable() {
           classes.container,
         ])}
       >
-        <div className="col-3 d-flex justify-content-center">درس</div>
-        <div className="col-3 d-flex justify-content-center">زمان برگزاری</div>
+        {/* unitsCount */}
+        <div className="col-3 d-flex justify-content-center">{data.course.title}</div>
+        <div className="col-6 d-flex justify-content-center">
+          
+        {data.timeTableBells.map((item,index)=>{
+              return(
+                <div>
 
-        <div className="col-3 d-flex justify-content-center">نامعلوم</div>
+                    <span>
+                      {` ${item.day.label}(${item.bell.label}) / `}
+                    </span>
+                </div>
+               
+              )
+            })}
+          
+          
+          </div>
 
-        <div className="col-3 d-flex justify-content-center">-</div>
+        <div className="col-2 d-flex justify-content-center">{data.course.unitsCount}</div>
+
+        
       </div>
         </>
     )

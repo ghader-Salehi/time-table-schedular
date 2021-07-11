@@ -3,6 +3,9 @@ import Pagination from "@material-ui/lab/Pagination";
 import { makeStyles, Typography } from "@material-ui/core";
 import clsx from "clsx";
 import TimeTable from  './TimeTable'
+import  {getTimeTablesList} from '../../../../api/Admin/TImeTable'
+
+import { useSelector} from "react-redux";
 
 
 const useStyle = makeStyles(() => ({
@@ -21,24 +24,45 @@ const useStyle = makeStyles(() => ({
   },
 }));
 
+
 function Index() {
   const classes = useStyle();
-  const [timeTable, setTimeTable] = React.useState([1,2,3,1,1,1,1,1]);
+  const [timeTable, setTimeTable] = React.useState([]);
+  const id = useSelector(({ auth }) => auth.user._id);
+  
+
+  const filterTimeTable = (array)=>{
+       return array.filter((item)=>item.master._id === id)
+  }
+  
+React.useEffect(()=>{
+  getTimeTablesList()
+        .then(res=>{
+            console.log(filterTimeTable(res.data.data.timetables));
+            setTimeTable(filterTimeTable(res.data.data.timetables))
+            console.log(res);
+            console.log(id)
+
+        }).catch(err=>{
+          console.log(err);
+        })
+},[])
+
+
+
   return (
     <>
       <div
         className={clsx([" d-flex mt-4  p-3 mr-3 ml-5 ", classes.container])}
       >
         <div className="col-3 d-flex justify-content-center">درس مربوطه</div>
-        <div className="col-3 d-flex justify-content-center">  تایم برگزاری  </div>
+        <div className="col-6 d-flex justify-content-center">  تایم برگزاری  </div>
 
-        <div className="col-3 d-flex justify-content-center">
-          مکان برگزاری  
+        <div className="col-2 d-flex justify-content-center">
+          تعداد واحد
         </div>
 
-        <div className="col-3 d-flex justify-content-center">
-          تعداد دانشجویان
-        </div>
+       
       </div>
 
       {!timeTable.length && (
