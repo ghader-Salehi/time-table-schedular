@@ -5,7 +5,7 @@ import clsx from "clsx";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 
 import "sweetalert2/src/sweetalert2.scss";
-import { chooseTimeTableByMaster } from "../../../../../api/Admin/Courses";
+import { chooseTimeTableByStudent } from "../../../../../api/Admin/TImeTable";
 
 const useStyle = makeStyles((theme) => ({
   font: {
@@ -41,7 +41,7 @@ function Course({ data }) {
   const [courseTimeTables, setCourseTimeTables] = React.useState([]);
 
   const handleChoose = ()=>{
-    chooseTimeTableByMaster(data._id)
+    chooseTimeTableByStudent(data._id)
         .then(res=>{
           console.log(res);
         }).catch(err=>{
@@ -66,9 +66,9 @@ function Course({ data }) {
           " d-flex justify-content-around p-4  mb-3 shadow",
         ])}
       >
-        <div className="d-flex col-3">
+        <div className="d-flex col-4">
           <div className='m-1'  >درس :</div>
-          <div className='m-1' >{data.course.title}</div>
+          <div className='m-1' >{data.course.title + "(" + data.master.lastname + ")"}</div>
         </div>
         <div  className="d-flex col-2">
           <div className='m-1' >واحد :</div>
@@ -83,7 +83,7 @@ function Course({ data }) {
                 <div>
 
                     <span className=''>
-                      {`* ${item.day.label}(${item.bell.label}) *  `}
+                      {`* ${item.day ? item.day.label : ''}(${item.bell ? item.bell.label : ''}) *  `}
                     </span>
                 </div>
                
@@ -93,12 +93,12 @@ function Course({ data }) {
             
           </div>
         </div>
-        <div className="col-2">
+        <div className="col-1">
           <Button
             className={clsx([" bg-light shadow", classes.font])}
             onClick={handleChoose}
           >
-            انتخاب درس
+            انتخاب 
           </Button>
         </div>
       </div>

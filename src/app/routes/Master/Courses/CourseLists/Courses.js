@@ -79,7 +79,7 @@ function Courses({data}) {
                     className={clsx([" bg-light shadow", classes.font])}
                     onClick={handleChoose}
                 >
-                    انتخاب درس
+                    انتخاب 
                 </Button>
                 </div>
             </div>

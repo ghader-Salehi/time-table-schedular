@@ -35,9 +35,8 @@ function Index() {
 
 
   const filterAnnouncements = (array)=>{
-    //   timeTable  timetables
-    let Temp = []
-      return array.map(item=>{
+
+       array.map(item=>{
         getTimeTableById(item.timeTable)
             .then(res=>{
                 
@@ -54,18 +53,22 @@ function Index() {
   }
 
   React.useEffect(()=>{
-    getAnnouncementsList()
-            .then(res=>{
-                console.log(res);
-                filterAnnouncements(res.data.data.announcements)
-            }).catch(err=>{
-
-            })
+    handleupdateListAfterDelete()
   },[])
 
-  React.useEffect(()=>{
-    console.log(courses);
-  })
+  const handleupdateListAfterDelete = ()=>{
+    setAnnouncements([])
+    getAnnouncementsList()
+    .then(res=>{
+        console.log(res);
+        filterAnnouncements(res.data.data.announcements)
+    }).catch(err=>{
+
+    })
+}
+
+
+
 
   return (
     <>
@@ -74,7 +77,9 @@ function Index() {
       >
         <div className="col-6 d-flex ">متن</div>
 
-        <div className="col-3 d-flex ">درس مربوطه</div>
+        <div className="col-4 d-flex ">درس مربوطه</div>
+
+        <div className="col-2 d-flex ">پاک کردن </div>
       </div>
 
       {!Announcements.length && (
@@ -86,7 +91,7 @@ function Index() {
       )}
       <div className="mb-5">
         {Announcements.map((item, index) => {
-          return <Announcement data={item} title={courses}/>;
+          return <Announcement data={item} title={courses} updateFanction ={handleupdateListAfterDelete}/>;
         })}
       </div>
       <div className="d-flex justify-content-center mb-5 mt-3 pb-5">

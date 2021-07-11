@@ -3,7 +3,8 @@ import Pagination from "@material-ui/lab/Pagination";
 import { makeStyles, Typography } from "@material-ui/core";
 import clsx from "clsx";
 import TimeTable from  './TimeTable'
-import {getTimeTablesList} from '../../../../api/Admin/TImeTable'
+import {getTimeTablesList,startProcces} from '../../../../api/Admin/TImeTable'
+
 
 const useStyle = makeStyles(() => ({
   font: {
@@ -26,13 +27,19 @@ function Index() {
   const [timeTable, setTimeTable] = React.useState([]);
 
   React.useEffect(()=>{
-    getTimeTablesList()
-          .then(res=>{
-                console.log(res);
-                setTimeTable(res.data.data.timetables);
-          }).catch(err=>{
-                console.log(err)
-          })
+    startProcces()
+        .then(res=>{
+               getTimeTablesList()
+                  .then(res=>{
+                        console.log(res);
+                        setTimeTable(res.data.data.timetables);
+                  }).catch(err=>{
+                        console.log(err)
+                  })
+        }).catch(err=>{
+
+        })
+   
   },[])
   return (
     <>

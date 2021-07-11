@@ -12,6 +12,8 @@ import {
   import Swal from 'sweetalert2/dist/sweetalert2.js'
   import 'sweetalert2/src/sweetalert2.scss'
   import { useHistory } from 'react-router';
+import { useSelector } from 'react-redux';
+  
 
 
   const useStyle = makeStyles((theme) => ({
@@ -61,6 +63,7 @@ function Index({timeTableId}) {
     const [title,setTitle] = useState('')
     const [body,setBody] = useState('')
     const history = useHistory()
+    const role = useSelector(({auth})=>auth.user.rule)
      
 
     const handleCreateAnnouncement = ()=>{
@@ -78,7 +81,10 @@ function Index({timeTableId}) {
               showConfirmButton: false,
               timer: 1500
             })
-            // history.push('/dashboard/announcementsList')
+            if(role === 'admin')
+              history.push('/dashboard/announcementsList')
+            else 
+              history.push('/dashboard/masterAnnouncementlist')
         }).catch(err=>{
 
         })

@@ -36,7 +36,7 @@ function TimeTable({data}) {
                 <div>
 
                     <span>
-                      {` ${item.day.label}(${item.bell.label}) / `}
+                      {` ${item.day ? item.day.label : ''}(${item.bell ? item.bell.label : ''}) / `}
                     </span>
                 </div>
                

@@ -60,6 +60,10 @@ const RecentAnnouncement = ({data,role}) => {
     
 }
 
+React.useEffect(()=>{
+  console.log(data)
+},[])
+
   
   return (
     <>
@@ -77,7 +81,7 @@ const RecentAnnouncement = ({data,role}) => {
           </div>
           <div>
             <Typography style={{fontSize:'14px'}} className={clsx([classes.font])} variant="subtitle2">
-              تعطیلی
+              بدون عنوان
             </Typography>
           </div>
         </div>
@@ -90,14 +94,14 @@ const RecentAnnouncement = ({data,role}) => {
           </div>
           <div>
             <Typography style={{fontSize:'14px'}} className={clsx([classes.font,'text-center'])} variant="subtitle2">
-            با سلام .کلاس روز سه شنبه 
+            {data.message}
 
             </Typography>
           </div>
         </div>
         <div className="d-flex flex-column align-items-center">
           <Typography style={{fontSize:'12px'}} className={clsx([classes.font])} variant="subtitle2">
-            23خرداد
+            19خرداد
           </Typography>
         </div>
         <div className="d-flex justify-content-center mt-2">

@@ -14,6 +14,10 @@ const useStyle = makeStyles(() => ({
 }));
 const Class = ({ data ,role}) => {
   const classes = useStyle();
+
+  React.useEffect(()=>{
+      // console.log(data,'from here')
+  },[])
   return (
     <>
       <div
@@ -22,13 +26,27 @@ const Class = ({ data ,role}) => {
           classes.container,
         ])}
       >
-        <div className="col-3 d-flex justify-content-center">درس</div>
-        <div className="col-3 d-flex justify-content-center">زمان برگزاری</div>
+        <div className="col-3 d-flex justify-content-center">{data.course.title}</div>
+        <div className="col-6 d-flex justify-content-center">
+        {
+          data.timeTableBells.map((item,index)=>{
+              return(
+                <div>
+
+                    <span className=''>
+                      {`* ${item.day ? item.day.label : ''}(${item.bell ? item.bell.label : ''}) *  `}
+                    </span>
+                </div>
+               
+              )
+            })}
+          
+        </div>
         {role !== "master" && (
-          <div className="col-3 d-flex justify-content-center">استاد</div>
+          <div className="col-3 d-flex justify-content-center">{data.master.lastname}</div>
         )}
 
-        <div className="col-3 d-flex justify-content-center">محل برگزاری</div>
+       
       </div>
     </>
   );

@@ -20,7 +20,7 @@ function TimeTable({data}) {
   const classes = useStyle();
 
   React.useEffect(()=>{
-      console.log(data);
+      console.log(data.timeTableBells);
   },[])
   return (
     <>
@@ -39,7 +39,8 @@ function TimeTable({data}) {
                 <div>
 
                     <span>
-                      {` ${item.day.label}(${item.bell.label}) / `}
+                      {` ${item.day.label}(${item.bell ? item.bell.label : ''}) / `}
+                   
                     </span>
                 </div>
                

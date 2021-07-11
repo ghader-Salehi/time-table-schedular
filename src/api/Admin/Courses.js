@@ -31,7 +31,5 @@ export const chooseCourseByMaster = async(id,data)=>{
 }
 
 
-export const chooseTimeTableByMaster = async(id,data)=>{
-    return await axiosObj.post(`${API}/timetables/${id}/choose`,data)
-}
+
 

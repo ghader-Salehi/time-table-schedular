@@ -60,7 +60,7 @@ function Index() {
                 </div>
                 
                 <div className='col-3 d-flex justify-content-center'> 
-                       عنوان اطلاعیه
+                       متن اطلاعیه
                 </div>
                 
                 <div className='col-3 d-flex justify-content-center'>

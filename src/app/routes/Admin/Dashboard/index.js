@@ -7,17 +7,52 @@ import RecentAnnouncements from "../../../../components/Custom/RecentAnnouncemen
 import { ADMIN, MASTER, STUDENT } from "../../../../constants/Roles";
 import { useSelector } from "react-redux";
 import moment from 'jalali-moment'
+import store from "../../../../redux/reduxStore";
+import {axiosObj} from '../../../../api'
+
+
+
 const useStyle = makeStyles((theme) => ({
+
   font: {
     fontFamily: "iranYekan",
     color: "#8B8989",
   },
 }));
 
+
 const Index = () => {
   const classes = useStyle();
   const role = useSelector(({ auth }) => auth.user.rule);
   const [Todayclasses, setClasses] = useState([]);
+  const [recentAnnouncement,setRecentAnnouncement] = useState('')
+  const [test , setTest] = useState('')
+  
+
+
+  React.useEffect(()=>{
+    console.log(Todayclasses ,'from here');
+
+    const token = store.getState().auth.token;
+    axiosObj.defaults.headers["Authorization"] = `${token}`;
+    axiosObj.get('api/timetables/todayClasses')
+          .then(res=>{
+            console.log(res)
+            setClasses(res.data.data.timeTables)
+          })
+
+          axiosObj.get('api/announcements')
+          .then(res=>{
+            console.log(res)
+            setRecentAnnouncement(res.data.data.announcements)
+          })
+
+
+          
+},[])
+
+
+
   return (
     <>
       <div className="d-flex flex-column ">
@@ -26,7 +61,7 @@ const Index = () => {
             اخرین اطلاعیه ها
           </Typography>
         </div>
-        <RecentAnnouncements role={role} content={[]} />
+        <RecentAnnouncements role={role} content={recentAnnouncement} />
         <div className="d-flex mt-4">
           <Typography className={clsx([classes.font])}>
             کلاس های امروز ( {moment().locale('fa').format('dddd')} )
