@@ -2,7 +2,9 @@ import React from 'react'
 import { makeStyles, Typography } from "@material-ui/core";
 import clsx from "clsx";
 import ChoosedCourse from './ChoosedCourse'
-// import {} from '../../../../../api/Admin/Courses'
+import { useSelector } from 'react-redux';
+import {getCourseById} from '../../../../../api/Admin/Courses'
+
 
 const useStyle = makeStyles(() => ({
     font: {
@@ -23,6 +25,21 @@ const useStyle = makeStyles(() => ({
 function Index() {
     const classes = useStyle();
     const [course, setCourses] = React.useState([]);
+    const user = useSelector(({ auth }) => auth.user)
+// courses
+    React.useEffect(()=>{
+        console.log(user)
+        user.courses.map((item)=>{
+          console.log(item);
+          getCourseById(item)
+              .then(res=>{
+                console.log(res);
+                 setCourses(course => [...course,res.data.data.courses])
+              }).catch(err=>{
+                console.log(err)
+              })
+        })
+    },[])
     return (
         <>
                 <div

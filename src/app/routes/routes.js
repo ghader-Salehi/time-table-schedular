@@ -75,7 +75,7 @@ const routes = [
     path: '/dashboard/masterWorkingDays',
     part: 'master',
     exact: true,
-    component: lazy(() => import('./Master/WorkingDays')),
+    component: lazy(() => import('./Master/WorkingDays/index')),
   },
   {
     path: '/dashboard/masterTimeTable',

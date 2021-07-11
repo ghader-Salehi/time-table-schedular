@@ -3,6 +3,9 @@ import Pagination from "@material-ui/lab/Pagination";
 import { makeStyles, Typography } from "@material-ui/core";
 import clsx from "clsx";
 import TimeTable from  './TimeTables'
+import { useSelector } from 'react-redux';
+import {getTimeTableById} from '../../../../api/Admin/TImeTable'
+
 
 const useStyle = makeStyles(() => ({
     font: {
@@ -24,6 +27,19 @@ function Index() {
 
     const classes = useStyle();
     const [timeTable, setTimeTable] = React.useState([]);
+    const user = useSelector(({auth})=>auth.user)
+
+    React.useEffect(()=>{
+            console.log(user)
+            user.timeTables.map((id)=>{
+                getTimeTableById(id)
+                    .then(res=>{
+                        console.log(res)
+                    }).catch(err=>{
+                        console.log(err)
+                    })
+            })
+    },[])
 
     return (
         <>

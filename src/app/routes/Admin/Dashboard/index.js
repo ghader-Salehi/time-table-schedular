@@ -25,7 +25,7 @@ const Index = () => {
   const classes = useStyle();
   const role = useSelector(({ auth }) => auth.user.rule);
   const [Todayclasses, setClasses] = useState([]);
-  const [recentAnnouncement,setRecentAnnouncement] = useState('')
+  const [recentAnnouncement,setRecentAnnouncement] = useState([])
   const [test , setTest] = useState('')
   
 
@@ -41,11 +41,6 @@ const Index = () => {
             setClasses(res.data.data.timeTables)
           })
 
-          axiosObj.get('api/announcements')
-          .then(res=>{
-            console.log(res)
-            setRecentAnnouncement(res.data.data.announcements)
-          })
 
 
           

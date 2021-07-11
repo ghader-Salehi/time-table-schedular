@@ -14,7 +14,7 @@ const useStyle = makeStyles(() => ({
     },
   }));
 
-function ChoosedCourse() {
+function ChoosedCourse({data}) {
     const classes = useStyle();
     return (
         <>
@@ -24,8 +24,8 @@ function ChoosedCourse() {
           classes.container,
         ])}
       >
-        <div className="col-4 d-flex justify-content-center">درس</div>
-        <div className="col-3 d-flex justify-content-center">0</div>
+        <div className="col-4 d-flex justify-content-center">{data.title}</div>
+        <div className="col-3 d-flex justify-content-center">{data.unitsCount}</div>
 
 
 

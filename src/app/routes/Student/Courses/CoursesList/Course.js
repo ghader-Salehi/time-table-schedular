@@ -44,16 +44,17 @@ function Course({ data }) {
     chooseTimeTableByStudent(data._id)
         .then(res=>{
           console.log(res);
+          Swal.fire({
+            title: `دوره  ${data.course.title}  انتخاب شد`,
+            text: 'دوره مورد نظر به لیست دوره های انتخابی اضافه شد',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 2500
+          })
         }).catch(err=>{
           console.log(err)
         })
-    Swal.fire({
-        title: `دوره  ${data.course.title}  انتخاب شد`,
-        text: 'دوره مورد نظر به لیست دوره های انتخابی اضافه شد',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 2500
-      })
+   
      
   }
 
