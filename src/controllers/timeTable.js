@@ -79,14 +79,16 @@ exports.getTimeTableByID = hanldeFactory.getOneByID(
   timeTablePopulation
 );
 
-exports.getListOfTimeTalbes = catchAsync(async (req, res, next) => {
-  if (req.user.rule == 'admin') return hanldeFactory.getListOfDocuments(TimeTable, timeTablePopulation);
-  const timeTables = (await User.findById(req.user.id).populate(userTimeTablePopulation)).timeTables;
-  timeTables.forEach(timeTable => {
-    timeTable.master.timeTables = undefined;
-    timeTable.master.timeTableBells = undefined;
-    timeTable.master.courses = undefined;
-  })
+exports.getListOfTimeTalbes = hanldeFactory.getListOfDocuments(TimeTable, timeTablePopulation);
+exports.getUserTimeTables = catchAsync(async (req, res, next) => {
+  console.log(req.user)
+  const timeTables = (await User.findById(req.user._id).populate({ path: 'timeTables', model: 'timeTable' })).timeTables;
+  console.log('time tables', timeTables)
+  // timeTables.forEach(timeTable => {
+  //   timeTable.master.timeTables = undefined;
+  //   timeTable.master.timeTableBells = undefined;
+  //   timeTable.master.courses = undefined;
+  // })
   res.status(200).json({
     status: 'TimeTables found',
     success: true,

@@ -7,6 +7,7 @@ const router = express.Router();
 // logged in users can access
 router.use(authController.protect);
 router.get('/', timeTableController.getListOfTimeTalbes);
+router.get('/me', timeTableController.getUserTimeTables);
 router.get('/todayClasses', timeTableController.getTodayClasses);
 router.get('/:id', timeTableController.getTimeTableByID);
 
