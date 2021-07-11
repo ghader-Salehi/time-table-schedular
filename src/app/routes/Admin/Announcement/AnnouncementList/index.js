@@ -33,10 +33,21 @@ function Index() {
         getAnnouncementsList()
             .then(res=>{
                 console.log(res);
+                setAnnouncements(res.data.data.announcements)
             }).catch(err=>{
                 console.log(err)
             })
     },[])
+
+    const handleupdateListAfterDelete = ()=>{
+        getAnnouncementsList()
+        .then(res=>{
+            console.log(res);
+            setAnnouncements(res.data.data.announcements)
+        }).catch(err=>{
+            console.log(err)
+        })
+    }
 
     return (
         <>
@@ -53,7 +64,7 @@ function Index() {
                 </div>
                 
                 <div className='col-3 d-flex justify-content-center'>
-                    تاریخ ایجاد اطلاعیه
+                    پاک کردن
                 </div>
             </div>
 
@@ -71,7 +82,7 @@ function Index() {
                     {Announcements.map((item,index)=>{
                         return(
                             
-                                <Announcement  data={item}/>
+                                <Announcement handleUpdateList={handleupdateListAfterDelete}  data={item}/>
                         
                         
                         )
@@ -79,7 +90,7 @@ function Index() {
             </div>
             <div className="d-flex justify-content-center mb-5 mt-3 pb-5">
                 {Announcements.length ? (
-                    <Pagination count={10} shape="rounded" variant="outlined" />
+                    <Pagination count={1} shape="rounded" variant="outlined" />
                 ) : null}
         </div>
         </>

@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import clsx from "clsx";
+import {getTimeTableById} from '../../../../../api/Admin/TImeTable'
+import {deleteAnnouncement} from '../../../../../api/Admin/Announcements'
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 
 const useStyle = makeStyles(() => ({
   font: {
@@ -13,8 +19,50 @@ const useStyle = makeStyles(() => ({
   },
 }));
 
-function Announcement({data}) {
+
+
+function Announcement({data,handleUpdateList}) {
   const classes = useStyle();
+  // const [timeTable,setTimetable] = useState({})
+  const [course,setCourse] = useState('')
+  const [master,setMaster] = useState('')
+
+
+
+  React.useEffect(()=>{
+    console.log(data.timeTable);
+      getTimeTableById(data.timeTable)
+        .then(res=>{
+            console.log(res);
+            setCourse(res.data.data.timetables.course.title)
+            console.log(res.data.data.timetables.course.title);
+            setMaster(res.data.data.timetables.master.lastname)
+        }).catch(err=>{
+
+        })
+      
+      },[])
+
+      const handleDeleteAnnouncement = ()=>{
+
+            deleteAnnouncement(data._id)
+                  .then(res=>{
+                      console.log(res);
+                      Swal.fire({
+                        title: 'اطلاعیه پاک شد',
+                        text: 'اطلاعیه مورد نظر با موفقیت پاک شد',
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
+                      })
+
+                      handleUpdateList()
+
+                  }).catch(err=>{
+
+                  })
+      }
+
   return (
     <>
       <div
@@ -23,13 +71,18 @@ function Announcement({data}) {
           classes.container,
         ])}
       >
-        <div className="col-3 d-flex justify-content-center">درس</div>
-        <div className="col-3 d-flex justify-content-center">زمان برگزاری</div>
+        <div className="col-3 d-flex justify-content-center">{course}</div>
+        <div className="col-3 d-flex justify-content-center">{master}</div>
        
-          <div className="col-3 d-flex justify-content-center">استاد</div>
+          <div className="col-3 d-flex justify-content-center">{data.message}</div>
         
 
-        <div className="col-3 d-flex justify-content-center">محل برگزاری</div>
+        <div className="col-3 d-flex justify-content-center">
+          <IconButton aria-label="delete" onClick={handleDeleteAnnouncement}>
+              <DeleteIcon />
+          </IconButton>
+      
+      </div>
       </div>
     </>
   );

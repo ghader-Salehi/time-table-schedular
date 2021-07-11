@@ -1,0 +1,30 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.table-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+  height: 400px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.column-item {
+  padding: 20px 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2 ease;
+  width: 150px;
+}

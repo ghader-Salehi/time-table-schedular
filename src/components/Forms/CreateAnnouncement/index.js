@@ -9,6 +9,11 @@ import {
   import clsx from "clsx";
   import {createAnnouncement} from '../../../api/Admin/Announcements'
 
+  import Swal from 'sweetalert2/dist/sweetalert2.js'
+  import 'sweetalert2/src/sweetalert2.scss'
+  import { useHistory } from 'react-router';
+
+
   const useStyle = makeStyles((theme) => ({
     font: {
       fontFamily: "iranYekan",
@@ -55,20 +60,28 @@ function Index({timeTableId}) {
     const classes = useStyle();
     const [title,setTitle] = useState('')
     const [body,setBody] = useState('')
+    const history = useHistory()
      
 
     const handleCreateAnnouncement = ()=>{
       let obj ={
-        title:title,
         message:body,
         timeTable:timeTableId
       }
-      // createAnnouncement(obj)
-      //   .then((res)=>{
+      createAnnouncement(obj)
+        .then((res)=>{
+            console.log(res);
+            Swal.fire({
+              title: 'اطلاعیه ایجاد شد',
+              text: 'اطلاعیه مورد نظر با موفقیت ایجاد شد',
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            history.push('/dashboard/announcementsList')
+        }).catch(err=>{
 
-      //   }).catch(err=>{
-
-      //   })
+        })
 
 
     }

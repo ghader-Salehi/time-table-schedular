@@ -11,10 +11,17 @@ const useStyle = makeStyles(() => ({
       color: "#8B8989",
     },
   },
+  timeTableFontStyle:{
+    fontSize:"14px"
+  }
 }));
 
 function TimeTable({data}) {
   const classes = useStyle();
+
+  React.useEffect(()=>{
+      console.log(data);
+  },[])
   return (
     <>
       <div
@@ -23,15 +30,31 @@ function TimeTable({data}) {
           classes.container,
         ])}
       >
-        <div className="col-3 d-flex justify-content-center">درس</div>
-        <div className="col-3 d-flex justify-content-center">زمان برگزاری</div>
+        <div className="col-3 d-flex justify-content-center">{data.course.title}</div>
+        <div className="col-2 d-flex justify-content-center">{data.master.lastname}</div>
 
-        <div className="col-3 d-flex justify-content-center">استاد</div>
+        <div className={clsx(["col-5 d-flex justify-content-center",classes.timeTableFontStyle])}>
+            {data.timeTableBells.map((item,index)=>{
+              return(
+                <div>
 
-        <div className="col-3 d-flex justify-content-center">محل برگزاری</div>
+                    <span>
+                      {` ${item.day.label}(${item.bell.label}) / `}
+                    </span>
+                </div>
+               
+              )
+            })}
+
+
+        </div>
+
+        <div className="col-1 d-flex justify-content-center">--</div>
       </div>
     </>
   );
 }
 
+// timeTableBells  day label
+// timeTableBells  day label
 export default TimeTable;
