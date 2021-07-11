@@ -106,3 +106,15 @@ exports.getMasterCourses = catchAsync(async (req, res, next) => {
     }
   })
 })
+
+exports.getMasterTimeTableBells = catchAsync(async (req, res, next) => {
+  const timeTableBells = (await User.findById(req.user.id).populate(userPopulation)).timeTableBells;
+  res.status(200).json({
+    status: 'TimeTableBells found',
+    success: true,
+    message: `Time table bells for master with ID ${req.user.id}`,
+    data: {
+      timeTableBells
+    }
+  })
+})

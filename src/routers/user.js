@@ -11,9 +11,15 @@ router
   .get(userController.getUserProfile);
 router.patch('/changepassword', userController.updateUserPassword);
 
+//only master can access this route
+router.get('/timetablebells', authController.restrictTo('master'), userController.getMasterTimeTableBells);
+
+// master and admin can access this route
 router.use(authController.restrictTo('admin', 'master'))
 router.get('/:id/courses', userController.getMasterCourses)
 
+
+//only admin can access this route
 router.use(authController.restrictTo('admin')); // only admin can access
 router
   .route('/:id')

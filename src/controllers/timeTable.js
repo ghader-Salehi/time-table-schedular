@@ -45,14 +45,57 @@ const mastersPopulation = [
   },
 ];
 
-exports.getListOfTimeTalbes = hanldeFactory.getListOfDocuments(
-  TimeTable,
-  timeTablePopulation
-);
+const userTimeTablePopulation = {
+  path: 'timeTables',
+  model: 'timeTable',
+  populate: [
+    {
+      path: 'timeTableBells',
+      model: 'timeTableBell',
+      populate: [
+        {
+          path: 'day',
+          model: 'day',
+        },
+        {
+          path: 'bell',
+          model: 'bell',
+        },
+      ],
+    },
+    {
+      path: 'master',
+      model: 'user',
+    },
+    {
+      path: 'course',
+      model: 'course',
+    },
+  ],
+};
+
 exports.getTimeTableByID = hanldeFactory.getOneByID(
   TimeTable,
   timeTablePopulation
 );
+
+exports.getListOfTimeTalbes = catchAsync(async (req, res, next) => {
+  if (req.user.rule == 'admin') return hanldeFactory.getListOfDocuments(TimeTable, timeTablePopulation);
+  const timeTables = (await User.findById(req.user.id).populate(userTimeTablePopulation)).timeTables;
+  timeTables.forEach(timeTable => {
+    timeTable.master.timeTables = undefined;
+    timeTable.master.timeTableBells = undefined;
+    timeTable.master.courses = undefined;
+  })
+  res.status(200).json({
+    status: 'TimeTables found',
+    success: true,
+    message: `${req.user.rule} with ID ${req.user.id} timetables`,
+    data: {
+      timeTables
+    }
+  })
+})
 
 exports.chooseTimeTableByStudent = catchAsync(async (req, res, next) => {
   const user = req.user;
@@ -83,6 +126,12 @@ exports.startProcess = catchAsync(async (req, res, next) => {
   await TimeTable.deleteMany();
   const timeTables = await TimeTable.insertMany(outputedTimeTables);
 
+  for (let i = 0; i < timeTables.length; i++) {
+    const user = await User.findById(timeTables[i].master);
+    user.timeTables.push(timeTables[i]._id);
+    await user.save();
+  }//end for
+
   res.status(200).json({
     status: 'success',
     success: true,
@@ -92,35 +141,6 @@ exports.startProcess = catchAsync(async (req, res, next) => {
     },
   });
 });
-
-const userTimeTablePopulation = {
-  path: 'timeTables',
-  model: 'timeTable',
-  populate: [
-    {
-      path: 'timeTableBells',
-      model: 'timeTableBell',
-      populate: [
-        {
-          path: 'day',
-          model: 'day',
-        },
-        {
-          path: 'bell',
-          model: 'bell',
-        },
-      ],
-    },
-    {
-      path: 'master',
-      model: 'user',
-    },
-    {
-      path: 'course',
-      model: 'course',
-    },
-  ],
-};
 
 exports.getTodayClasses = catchAsync(async (req, res, next) => {
   console.log('this user timeTables', req.user.timeTables);

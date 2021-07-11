@@ -9,6 +9,8 @@ router.use(authController.restrictTo('admin', 'master'));
 router.get('/', timeTableBellController.getListOfTimeTableBells);
 router.get('/:id', timeTableBellController.getTimeTableBellByID);
 
+router.post('/choose/:id/:selection', authController.restrictTo('master'), timeTableBellController.chooseTimeTableBell);
+
 router.use(authController.restrictTo('admin'));
 router.post('/', timeTableBellController.createNewTimeTableBell);
 router.delete('/:id', timeTableBellController.deleteTimeTableBellByID);

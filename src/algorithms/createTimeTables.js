@@ -1,3 +1,4 @@
+const User = require('../models/user');
 const mongoose = require('mongoose');
 
 let timeTables = [];
@@ -12,7 +13,6 @@ const createTimeTables = (courses, timeTableBells, masters) => {
   });
 
   let finalTimeTables = [];
-  console.log('we have', timeTables.length, 'timeTables');
   for (let i = timeTables.length - 1; i > 0; i--) {
     let curTimeTable = {
       course: timeTables[i].course.id,
