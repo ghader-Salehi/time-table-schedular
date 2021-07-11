@@ -6,9 +6,7 @@ import {
   getCourseMasters,
   deleteCourse,
 } from "../../../../../api/Admin/Courses";
-
 import Swal from "sweetalert2/dist/sweetalert2.js";
-
 import "sweetalert2/src/sweetalert2.scss";
 
 const useStyle = makeStyles((theme) => ({
@@ -59,7 +57,7 @@ function Course({ data, updateList }) {
         // timeTables
         setCourseTimeTables(res.data.data.timeTables);
       })
-      .catch((err) => {});
+      .catch((err) => { });
 
     getCourseMasters(data._id)
       .then((res) => {
@@ -90,7 +88,7 @@ function Course({ data, updateList }) {
 
         console.log(res);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   return (
