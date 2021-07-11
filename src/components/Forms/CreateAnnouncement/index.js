@@ -25,6 +25,9 @@ import { useSelector } from 'react-redux';
       "& label":{
         fontFamily: "iranYekan !important",
         fontSize:'14px'
+      },
+      "& textarea":{
+        fontFamily: "iranYekan",
       }
     },
     fullwidth: {
@@ -126,7 +129,7 @@ function Index({timeTableId}) {
              className={clsx([classes.fullwidth,'ml-5 mr-2',classes.font])}
                    
                     id="filled-multiline-flexible"
-                    label="عنوان اطلاعیه را وارد کنید "
+                    label="متن اطلاعیه را وارد کنید "
                     multiline
                     rows={2}
                     value={body}
