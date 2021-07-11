@@ -19,7 +19,7 @@ const useStyle = makeStyles(() => ({
         color: "#8B8989",
       },
       boxShadow: "0px 0px 0px 0px ",
-      borderRadius: "10px",
+      borderRadius: "10px", 
     },
   }));
 
